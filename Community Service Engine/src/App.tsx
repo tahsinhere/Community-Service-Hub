@@ -1,6 +1,7 @@
 import OpportunityCard from "./components/OpportunityCard";
 import { Route, Routes } from "react-router-dom";
 import OpportunityDetail from "./components/OpportunityDetail";
+import Header from "./components/Header";
 const oppor = [
   {
     id: 1,
@@ -72,15 +73,21 @@ const oppor = [
 
 function App() {
   return (
-    <div className="min-h-screen bg-neutral-900 flex items-center justify-center p-4 md:p-8">
+    <div
+      className="min-h-screen bg-neutral-900 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] [background-size:20px_20px] 
+                 flex flex-col items-center p-4 md:p-8"
+    >
       <Routes>
         <Route
           path="/"
           element={
-            <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6   ">
-              {oppor.map((oneObject) => (
-                <OpportunityCard key={oneObject.id} oneObject={oneObject} />
-              ))}
+            <div className="flex flex-col gap-12 w-full max-w-[90%] mx-auto">
+              <Header />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {oppor.map((oneObject) => (
+                  <OpportunityCard key={oneObject.id} oneObject={oneObject} />
+                ))}
+              </div>
             </div>
           }
         />

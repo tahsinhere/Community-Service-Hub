@@ -1,8 +1,19 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
+interface Opportunity {
+  id: number;
+  task: string;
+  teacher: string;
+  location: string;
+  time: string;
+  hours: number;
+  max_spots: number;
+  description: string;
+}
+
 interface WholeObject {
-  oppor: any[];
+  oppor: Opportunity[];
 }
 
 const OpportunityDetail = ({ oppor }: WholeObject) => {
@@ -15,8 +26,8 @@ const OpportunityDetail = ({ oppor }: WholeObject) => {
     return (
       <div className="min-h-screen bg-neutral-900 flex flex-col items-center justify-center p-6 text-center">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 0 }}
           className="max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 p-12 rounded-3xl"
         >
           <div className="text-6xl mb-4">🔍</div>
@@ -27,7 +38,7 @@ const OpportunityDetail = ({ oppor }: WholeObject) => {
           </p>
           <button
             onClick={() => navigate("/")}
-            className="w-full py-3 bg-[#125C9B] text-white font-bold rounded-xl hover:bg-blue-900 transition-colors"
+            className="w-full py-3 bg-[#125C9B] text-white font-bold rounded-xl hover:bg-[#054e8d] transition-colors"
           >
             Back to Home
           </button>
@@ -39,7 +50,7 @@ const OpportunityDetail = ({ oppor }: WholeObject) => {
     <div className="min-h-screen bg-neutral-900 flex items-center justify-center p-6">
       {/* Just ONE animation on the main card */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0.5, y: -2.5 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-4xl w-full bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-16 rounded-3xl"
       >
@@ -54,10 +65,10 @@ const OpportunityDetail = ({ oppor }: WholeObject) => {
         </button>
 
         <header className="mb-8">
-          <h1 className="text-5xl font-black text-[#125C9B] mb-2">
+          <h1 className="text-5xl font-black text-white mb-2">
             {selectedOpp.task}
           </h1>
-          <p className="text-xl text-gray-400">By {selectedOpp.teacher}</p>
+          <p className="text-xl text-[#125C9B]">By {selectedOpp.teacher}</p>
         </header>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-white/10 mb-8">

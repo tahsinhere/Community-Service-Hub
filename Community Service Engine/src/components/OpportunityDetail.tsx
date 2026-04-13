@@ -47,62 +47,81 @@ const OpportunityDetail = ({ oppor }: WholeObject) => {
     );
   }
   return (
-    <div className=" flex items-center justify-center p-6">
-      {/* Just ONE animation on the main card */}
+    <div className="flex items-center justify-center p-6">
       <motion.div
-        initial={{ opacity: 0.5, y: -2.5 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-4xl w-full bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-16 rounded-3xl"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        className="relative max-w-4xl w-full bg-[#125C9B] border border-white/20 p-8 md:p-16 rounded-3xl shadow-2xl"
       >
         <button
           onClick={() => navigate("/")}
-          className="absolute top-2 left-5 text-gray-400 hover:text-white transition-all flex items-center gap-2 group"
+          className="absolute top-6 left-8 text-white/60 hover:text-white transition-all flex items-center gap-2 group font-medium"
         >
           <span className="group-hover:-translate-x-1 transition-transform">
             ←
-          </span>{" "}
+          </span>
           Back to Explore
         </button>
 
-        <header className="mb-8">
-          <h1 className="text-5xl font-black text-white mb-2">
+        <header className="mb-8 mt-4">
+          <h1 className="text-5xl font-black text-white mb-2 tracking-tighter">
             {selectedOpp.task}
           </h1>
-          <p className="text-xl text-[#125C9B]">By {selectedOpp.teacher}</p>
+
+          <p className="text-xl text-blue-100/90 font-medium">
+            By {selectedOpp.teacher}
+          </p>
         </header>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-white/10 mb-8">
+        {/* Grid Section - increased border opacity for better contrast on blue */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-white/20 mb-8">
           <div>
-            <p className="text-gray-500 text-xs uppercase font-bold">
+            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
               Location
             </p>
-            <p className="text-white text-lg">{selectedOpp.location}</p>
+            <p className="text-white text-lg font-semibold">
+              {selectedOpp.location}
+            </p>
           </div>
           <div>
-            <p className="text-gray-500 text-xs uppercase font-bold">Time</p>
-            <p className="text-white text-lg">{selectedOpp.time}</p>
+            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
+              Time
+            </p>
+            <p className="text-white text-lg font-semibold">
+              {selectedOpp.time}
+            </p>
           </div>
           <div>
-            <p className="text-gray-500 text-xs uppercase font-bold">Credit</p>
-            <p className="text-white text-lg">{selectedOpp.hours}h offered </p>
+            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
+              Credit
+            </p>
+            <p className="text-white text-lg font-semibold">
+              {selectedOpp.hours}h Offered
+            </p>
           </div>
           <div>
-            <p className="text-gray-500 text-xs uppercase font-bold">Spots</p>
+            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
+              Spots
+            </p>
             <p
-              className={`text-lg font-bold ${selectedOpp.max_spots < 5 ? "text-amber-400" : "text-emerald-400"}`}
+              className={`text-lg font-bold ${selectedOpp.max_spots < 5 ? "text-amber-300" : "text-emerald-300"}`}
             >
               {selectedOpp.max_spots} Left
             </p>
           </div>
         </div>
 
-        <section className="mb-8">
+        <section className="mb-10">
           <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
-          <p className="text-xl text-gray-300">{selectedOpp.description}</p>
+          <p className="text-xl text-blue-50/80 leading-relaxed">
+            {selectedOpp.description}
+          </p>
         </section>
 
-        <button className="px-12 py-4 bg-[#125C9B] text-white font-bold rounded-2xl">
-          Volunteer
+        <button className="px-12 py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-blue-50 transition-all active:scale-95 shadow-xl">
+          Volunteer Now
         </button>
       </motion.div>
     </div>

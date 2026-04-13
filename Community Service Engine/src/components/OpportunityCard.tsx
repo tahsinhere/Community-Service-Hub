@@ -15,9 +15,13 @@ interface cardData {
   };
 }
 
-const OneObjecttunityCard = ({ oneObject }: cardData) => {
+const OpportunityCard = ({ oneObject }: cardData) => {
   const navigate = useNavigate();
   const [spots, setSpots] = useState(oneObject.max_spots);
+
+  if (oneObject === undefined) {
+    <div>Sorry looks like its empty</div>;
+  }
 
   return (
     <motion.div
@@ -70,4 +74,4 @@ const OneObjecttunityCard = ({ oneObject }: cardData) => {
   );
 };
 
-export default OneObjecttunityCard;
+export default OpportunityCard;

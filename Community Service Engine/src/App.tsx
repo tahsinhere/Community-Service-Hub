@@ -10,17 +10,19 @@ function App() {
     <div className="min-h-screen bg-neutral-900 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] bg-size-[20px_20px]">
       <Navbar />
       <div className="w-full max-w-[90%] mx-auto">
-        <div className="flex flex-col gap-12 ">
-          <Header />
-        </div>
         <Routes>
           <Route
             path="/"
             element={
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {oppor.map((oneObject) => (
-                  <OpportunityCard key={oneObject.id} oneObject={oneObject} />
-                ))}
+              <div>
+                <div className="flex flex-col gap-12 pt-30 ">
+                  <Header />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-8 ">
+                  {oppor.map((oneObject) => (
+                    <OpportunityCard key={oneObject.id} oneObject={oneObject} />
+                  ))}
+                </div>
               </div>
             }
           />

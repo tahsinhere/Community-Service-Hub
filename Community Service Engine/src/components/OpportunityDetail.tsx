@@ -24,10 +24,10 @@ const OpportunityDetail = ({ oppor }: WholeObject) => {
 
   if (selectedOpp === undefined) {
     return (
-      <div className="min-h-screen bg-neutral-900 flex flex-col items-center justify-center p-6 text-center">
+      <div className="flex flex-col items-center justify-center p-6 text-center">
         <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 0 }}
+          initial={{ opacity: 0, scale: 1 }}
+          animate={{ opacity: 1, scale: 1 }}
           className="max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 p-12 rounded-3xl"
         >
           <div className="text-6xl mb-4">🔍</div>
@@ -47,7 +47,7 @@ const OpportunityDetail = ({ oppor }: WholeObject) => {
     );
   }
   return (
-    <div className="min-h-screen bg-neutral-900 flex items-center justify-center p-6">
+    <div className=" flex items-center justify-center p-6">
       {/* Just ONE animation on the main card */}
       <motion.div
         initial={{ opacity: 0.5, y: -2.5 }}

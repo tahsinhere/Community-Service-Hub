@@ -28,7 +28,11 @@ function App() {
           />
           <Route
             path="/opportunity/:id"
-            element={<OpportunityDetail oppor={oppor} />}
+            element={
+              <div className="flex flex-col gap-12 pt-25">
+                <OpportunityDetail oppor={oppor} />
+              </div>
+            }
           />
         </Routes>
       </div>

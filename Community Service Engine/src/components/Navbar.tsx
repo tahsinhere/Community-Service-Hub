@@ -12,7 +12,7 @@ const Navbar = () => {
 
           <div className="flex flex-col border-l border-white/10 pl-3">
             <h1 className="text-xl font-black text-white tracking-tighter leading-none">
-              Community <span className="text-[#125C9B]">Service</span>
+              In House Community <span className="text-[#125C9B]">Service</span>
             </h1>
             <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">
               Eleanor Roosevelt HS

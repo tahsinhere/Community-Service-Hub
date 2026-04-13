@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-interface Opportunity {
+interface SingleObject {
   id: number;
   task: string;
   teacher: string;
@@ -12,11 +12,11 @@ interface Opportunity {
   description: string;
 }
 
-interface WholeObject {
-  oppor: Opportunity[];
+interface WholeArray {
+  oppor: SingleObject[];
 }
 
-const OpportunityDetail = ({ oppor }: WholeObject) => {
+const OpportunityDetail = ({ oppor }: WholeArray) => {
   const { id } = useParams();
   const navigate = useNavigate();
 

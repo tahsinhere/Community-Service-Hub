@@ -22,10 +22,10 @@ const Navbar = () => {
 
         {/* Right: User Actions */}
         <div className="flex items-center gap-6">
-          <button className="text-gray-400 hover:text-white font-medium transition-colors hidden sm:block">
+          <button className="text-gray-400 hover:text-white font-medium transition-colors sm:font-stretch-condensed">
             User Guide
           </button>
-          <button className="px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all shadow-lg shadow-white/5">
+          <button className="px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all shadow-lg shadow-white/5  ">
             Sign In
           </button>
         </div>

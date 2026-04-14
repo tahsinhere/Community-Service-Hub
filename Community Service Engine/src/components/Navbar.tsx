@@ -25,7 +25,7 @@ const Navbar = () => {
           <button className="text-gray-400 hover:text-white font-medium transition-colors hidden sm:block">
             User Guide
           </button>
-          <button className="px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all active:scale-95 shadow-lg shadow-white/5">
+          <button className="px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all shadow-lg shadow-white/5">
             Sign In
           </button>
         </div>

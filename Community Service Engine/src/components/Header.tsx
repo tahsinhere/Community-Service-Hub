@@ -14,8 +14,8 @@ const Header = () => {
           <span className="text-[#125C9B] relative inline-flex items-center">
             Now
             {/* just a red button*/}
-            <span className="ml-3 flex h-4 w-4 items-center justify-center">
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-800"></span>
+            <span className="ml-3 flex h-1.5 w-1.5 items-center justify-center">
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-800"></span>
             </span>
           </span>
         </h1>

@@ -20,7 +20,7 @@ const OpportunityCard = ({ oneObject }: cardData) => {
   const [spots, setSpots] = useState(oneObject.max_spots);
 
   if (oneObject === undefined) {
-    <div>Sorry looks like its empty</div>;
+    return <div>Sorry there was an error</div>;
   }
 
   return (

@@ -19,9 +19,24 @@ function App() {
                   <Header />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-8 ">
-                  {oppor.map((oneObject) => (
-                    <OpportunityCard key={oneObject.id} oneObject={oneObject} />
-                  ))}
+                  {oppor.length > 0 ? (
+                    oppor.map((oneObject) => (
+                      <OpportunityCard
+                        key={oneObject.id}
+                        oneObject={oneObject}
+                      />
+                    ))
+                  ) : (
+                    <div className="col-span-full flex flex-col items-center justify-center py-20 border-2 border-dashed border-white/10 rounded-3xl bg-white/5">
+                      <span className="text-5xl mb-4">📭</span>
+                      <h3 className="text-2xl font-bold text-white">
+                        No Opportunities Found
+                      </h3>
+                      <p className="text-gray-400 mt-2">
+                        Looks like everything is booked up. Check back later!
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             }

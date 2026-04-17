@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from "react";
 import { supabase } from "./lib/supabase";
+import Loading from "./components/Loading";
 
 function App() {
   const [opportunities, setOpportunities] = useState<any[]>([]);
@@ -13,7 +14,7 @@ function App() {
   useEffect(() => {
     const fetchOpportunities = async () => {
       const { data, error } = await supabase.from("opportunities").select("*");
-
+      await new Promise((resolve) => setTimeout(resolve, 8000));
       if (error) {
         console.log("Error in fetching data from Opportunities", error);
       } else {
@@ -25,44 +26,50 @@ function App() {
     fetchOpportunities();
   }, []);
 
-  if (loading)
-    return (
-      <div className="min-h-screen bg-neutral-900 text-white flex items-center justify-center font-black text-2xl">
-        Loading Cloud Data...
-      </div>
-    );
   return (
     <div className="min-h-screen bg-neutral-900 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] bg-size-[20px_20px]">
+      {/* Navbar stays visible NO MATTER WHAT */}
       <Navbar />
+
       <div className="w-full max-w-[90%] mx-auto">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div>
-                <div className="flex flex-col gap-12 pt-30 ">
-                  <Header />
+        {loading ? (
+          /* This section shows WHILE LOADING */
+          <div className="pt-40 flex flex-col items-center justify-center">
+            <Loading />
+          </div>
+        ) : (
+          /* This section shows AFTER LOADING */
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div>
+                  <div className="flex flex-col gap-12 pt-30 ">
+                    <Header />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-8 ">
+                    {opportunities.map((oneObject) => (
+                      <OpportunityCard
+                        key={oneObject.id}
+                        oneObject={oneObject}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-8 ">
-                  {opportunities.map((oneObject) => (
-                    <OpportunityCard key={oneObject.id} oneObject={oneObject} />
-                  ))}
+              }
+            />
+            <Route
+              path="/opportunity/:id"
+              element={
+                <div className="flex flex-col gap-12 pt-25">
+                  <OpportunityDetail oppor={opportunities} />
                 </div>
-              </div>
-            }
-          />
-          <Route
-            path="/opportunity/:id"
-            element={
-              <div className="flex flex-col gap-12 pt-25">
-                <OpportunityDetail oppor={opportunities} />
-              </div>
-            }
-          />
-        </Routes>
+              }
+            />
+          </Routes>
+        )}
       </div>
     </div>
   );
 }
-
 export default App;

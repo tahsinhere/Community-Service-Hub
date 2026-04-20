@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-interface cardData {
+interface SingleObject {
   oneObject: {
     teacher: string;
     task: string;
@@ -15,7 +15,7 @@ interface cardData {
   };
 }
 
-const OpportunityCard = ({ oneObject }: cardData) => {
+const OpportunityCard = ({ oneObject }: SingleObject) => {
   const navigate = useNavigate();
   const [spots, setSpots] = useState(oneObject.max_spots);
 

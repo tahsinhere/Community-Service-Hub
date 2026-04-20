@@ -4,12 +4,48 @@ import OpportunityDetail from "./components/OpportunityDetail";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from "react";
-import { supabase } from "./lib/supabase";
+import { supabase } from "./backend/supabase";
+
 import LoadingCard from "./components/LoadingCard";
+import type { User } from "@supabase/supabase-js";
+
+interface SingleObject {
+  id: number;
+  task: string;
+  teacher: string;
+  location: string;
+  time: string;
+  hours: number;
+  max_spots: number;
+  description: string;
+}
 
 function App() {
-  const [opportunities, setOpportunities] = useState<any[]>([]);
+  const [opportunities, setOpportunities] = useState<SingleObject[]>([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogin = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+  };
 
   useEffect(() => {
     const fetchOpportunities = async () => {
@@ -28,7 +64,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-900 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] bg-size-[20px_20px]">
-      <Navbar />
+      <Navbar onLogin={handleLogin} />
 
       <div className="w-full max-w-[90%] mx-auto">
         <Routes>
@@ -37,7 +73,7 @@ function App() {
             element={
               <div>
                 <div className="flex flex-col gap-12 pt-30 ">
-                  <Header />
+                  <Header user={user} />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-8 ">

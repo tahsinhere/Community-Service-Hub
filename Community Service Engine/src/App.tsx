@@ -5,9 +5,9 @@ import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from "react";
 import { supabase } from "./backend/supabase";
-
 import LoadingCard from "./components/LoadingCard";
 import type { User } from "@supabase/supabase-js";
+import SignUp from "./components/SignUp";
 
 interface SingleObject {
   id: number;
@@ -64,7 +64,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-900 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] bg-size-[20px_20px]">
-      <Navbar onLogin={handleLogin} />
+      <Navbar />
 
       <div className="w-full max-w-[90%] mx-auto">
         <Routes>
@@ -99,6 +99,8 @@ function App() {
               </div>
             }
           />
+
+          <Route path="/signup" element={<SignUp onLogin={handleLogin} />} />
         </Routes>
       </div>
     </div>

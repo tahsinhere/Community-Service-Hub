@@ -1,16 +1,17 @@
 import { useNavigate, Link } from "react-router-dom";
+// We use the 'lu' (Lucide) set which is clean and modern
+import { LuBookOpen, LuUserPlus, LuShieldCheck } from "react-icons/lu";
 
-interface Props {
-  onLogin: () => void;
-}
-
-const Navbar = ({ onLogin }: Props) => {
+const Navbar = () => {
   const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900/80 backdrop-blur-md border-b border-white/5">
       <div className="max-w-full mx-auto px-6 h-20 flex items-center justify-between">
+        {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3 group">
+          {/* Added a subtle Shield icon next to the logo */}
+          <LuShieldCheck className="text-2xl text-[#125C9B]  transition-transform" />
           <div className="flex flex-col border-l border-white/10 pl-3">
             <h1 className="text-xl font-black text-white tracking-tighter leading-none">
               In House Community <span className="text-[#125C9B]">Service</span>
@@ -21,14 +22,18 @@ const Navbar = ({ onLogin }: Props) => {
           </div>
         </Link>
 
+        {/* Navigation Actions */}
         <div className="flex items-center gap-6">
-          <button className="text-gray-400 hover:text-white font-medium transition-colors sm:font-stretch-condensed">
+          <button className="flex items-center gap-2 text-gray-400 hover:text-white font-medium transition-colors sm:font-stretch-condensed">
+            <LuBookOpen className="text-lg" />
             User Guide
           </button>
+
           <button
-            onClick={onLogin}
-            className="px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all shadow-lg shadow-white/5  "
+            onClick={() => navigate("/signup")}
+            className="cursor-pointer px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all shadow-lg shadow-white/5 flex items-center gap-2 active:scale-95"
           >
+            <LuUserPlus className="text-lg" />
             Sign Up
           </button>
         </div>

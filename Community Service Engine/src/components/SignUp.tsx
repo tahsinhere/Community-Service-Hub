@@ -7,7 +7,7 @@ const SignUp = ({ onLogin }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 p-12 rounded-[2rem] text-center"
+        className="max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 p-12  text-center"
       >
         <h2 className="text-4xl font-black text-white mb-4 tracking-tighter">
           Ready to serve?

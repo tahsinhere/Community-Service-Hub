@@ -10,7 +10,10 @@ const Header = ({ user }) => {
         className="text-center md:text-center"
       >
         <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter flex items-center justify-center gap-3">
-          Available {user?.user_metadata?.full_name}
+          Hi {user?.user_metadata?.name}
+        </h1>
+        <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter flex items-center justify-center gap-3">
+          Available
           <span className="text-[#125C9B] relative inline-flex items-center">
             Now
             {/* just a red button*/}

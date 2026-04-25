@@ -6,9 +6,9 @@ const SignUp = ({ onLogin }) => {
     <div className="flex items-center justify-center py-32 px-4 selection:bg-white/30">
       <motion.div
         initial={{ opacity: 1, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 2 }}
         viewport={{ once: true }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
+        transition={{ type: "spring", stiffness: 80, damping: 20 }}
         className="max-w-md w-full bg-[#125C9B] border border-white/10 rounded-[2.5rem] p-8 shadow-2xl"
       >
         {/* Header Section */}

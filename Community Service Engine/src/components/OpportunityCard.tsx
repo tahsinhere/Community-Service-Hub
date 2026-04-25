@@ -28,7 +28,7 @@ const OpportunityCard = ({ oneObject }: SingleObject) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ type: "spring", stiffness: 100, damping: 20 }}
+      transition={{ type: "spring", stiffness: 80, damping: 20 }}
       whileHover={{
         y: 0,
         shadow:

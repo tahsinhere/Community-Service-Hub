@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-// We use the 'lu' (Lucide) set which is clean and modern
+
 import { LuBookOpen, LuUserPlus, LuShieldCheck } from "react-icons/lu";
 
 const Navbar = () => {
@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="max-w-full mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3 group">
-          {/* Added a subtle Shield icon next to the logo */}
+          {/* Subtle Shield */}
           <LuShieldCheck className="text-2xl text-[#125C9B]  transition-transform" />
           <div className="flex flex-col border-l border-white/10 pl-3">
             <h1 className="text-xl font-black text-white tracking-tighter leading-none">
@@ -31,7 +31,7 @@ const Navbar = () => {
 
           <button
             onClick={() => navigate("/signup")}
-            className="cursor-pointer px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all shadow-lg shadow-white/5 flex items-center gap-2 active:scale-95"
+            className="cursor-pointer px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all shadow-lg shadow-white/5 flex items-center gap-2 "
           >
             <LuUserPlus className="text-lg" />
             Sign Up

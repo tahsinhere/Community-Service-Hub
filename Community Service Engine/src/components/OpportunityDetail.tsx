@@ -24,7 +24,7 @@ const OpportunityDetail = ({ oppor }: WholeArray) => {
 
   if (selectedOpp === undefined) {
     return (
-      <div className="flex flex-col items-center justify-center p-6 text-center">
+      <div className="flex flex-col items-center justify-center p-8 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 1 }}
           animate={{ opacity: 1, scale: 1 }}

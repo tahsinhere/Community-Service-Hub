@@ -59,7 +59,7 @@ const SignUp = ({ onLogin }) => {
         {/* Google  */}
         <button
           onClick={onLogin}
-          className="w-full py-4 bg-white text-[#125C9B] font-bold rounded-2xl flex items-center justify-center gap-3 active:scale-[0.98] transition-transform cursor-pointer shadow-lg mb-4"
+          className="w-full py-4 bg-white text-[#125C9B] font-bold rounded-2xl flex items-center justify-center gap-3 hover:bg-gray-200 transition-transform cursor-pointer "
         >
           <FcGoogle className="text-2xl" />
           <span className="text-sm tracking-tight">Continue with Google</span>

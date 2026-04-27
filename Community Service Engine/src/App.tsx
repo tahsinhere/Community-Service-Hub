@@ -51,6 +51,7 @@ function App() {
     const fetchOpportunities = async () => {
       const { data, error } = await supabase.from("opportunities").select("*");
       await new Promise((resolve) => setTimeout(resolve, 0));
+
       if (error) {
         console.log("Error in fetching data from Opportunities", error);
       } else {

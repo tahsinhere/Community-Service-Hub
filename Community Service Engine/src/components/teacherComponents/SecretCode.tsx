@@ -12,6 +12,11 @@ const SecretCode = () => {
     setInput(e.target.value);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
   const handleSubmit = () => {
     if (input === import.meta.env.VITE_SECRET_CODE) {
       navigate("/TeacherDashboard");
@@ -33,7 +38,17 @@ const SecretCode = () => {
           duration: 20,
         }}
         // The "Haptic" Shake: Sharp, fast, and subtle
-        animate={wrong ? { x: [-1, 1, -1, 1, 0], scale: [1, 0.97, 1] } : {}}
+        animate={
+          wrong
+            ? {
+                // Increased range from 5 to 12 for a more noticeable snap
+                x: [0, -3, 3, -3, 8, 0, 3, 0],
+                // Keeps the subtle scale compression for a "impact" feel
+
+                transition: { duration: 0.2 },
+              }
+            : {}
+        }
         className="max-w-md w-full bg-[#125C9B] border border-white/10 rounded-[2.5rem] p-10 shadow-2xl"
       >
         <div className="mb-8 text-left">
@@ -56,6 +71,7 @@ const SecretCode = () => {
 
             <input
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
               type="password"
               placeholder="••••••••"
               // Removed all conditional logic for the border - it stays clean

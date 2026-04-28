@@ -68,7 +68,15 @@ const SecretCode = () => {
           >
             Verify Identity
           </button>
-
+          {wrong && (
+            <motion.p
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-[10px] text-red-400 font-bold uppercase tracking-tighter mt-2 ml-2"
+            >
+              Invalid access key. Please try again.
+            </motion.p>
+          )}
           {/* Go Back Button */}
           <button
             onClick={() => navigate("/signup")}

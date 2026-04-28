@@ -1,12 +1,14 @@
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+
 const SecretCode = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [wrong, setWrong] = useState(false);
 
   const handleChange = (e) => {
+    setWrong(false);
     setInput(e.target.value);
   };
 
@@ -20,19 +22,24 @@ const SecretCode = () => {
 
   return (
     <div className="flex items-center justify-center py-50 px-4">
-      {/* This motion.div adds the smooth "pop-in" effect */}
       <motion.div
-        initial={{ opacity: 1, y: 18 }}
-        animate={{ opacity: 1, y: 2 }}
+        initial={{ opacity: 1, y: 20 }}
+        whileInView={{ opacity: 1, y: 2 }}
         viewport={{ once: true }}
-        transition={{ type: "spring", stiffness: 80, damping: 20 }}
+        transition={{
+          type: "spring",
+          stiffness: 80,
+          damping: 20,
+          duration: 20,
+        }}
+        // The "Haptic" Shake: Sharp, fast, and subtle
+        animate={wrong ? { x: [-1, 1, -1, 1, 0], scale: [1, 0.97, 1] } : {}}
         className="max-w-md w-full bg-[#125C9B] border border-white/10 rounded-[2.5rem] p-10 shadow-2xl"
       >
-        {/* Header */}
         <div className="mb-8 text-left">
           <div className="flex items-center gap-2 mb-2">
-            <div className="h-1 w-6 bg-white/40 rounded-full" />
-            <span className="text-[10px] uppercase tracking-[0.3em] text-white/60 font-bold">
+            <div className="h-0.5 w-6 rounded-full bg-white/30" />
+            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/60">
               Teacher Verification
             </span>
           </div>
@@ -41,43 +48,44 @@ const SecretCode = () => {
           </h2>
         </div>
 
-        {/* The Input Area */}
         <div className="space-y-6">
-          <div>
+          <div className="relative">
             <label className="block text-[10px] text-white/50 font-bold uppercase tracking-widest mb-2 ml-2">
               Enter Access Key
             </label>
-            <motion.input
+
+            <input
               onChange={handleChange}
               type="password"
               placeholder="••••••••"
-              animate={wrong ? { x: [-1, 1, -1, 1, 0] } : { x: 0 }}
-              transition={{ duration: 0.2 }}
-              className={`w-full py-4 px-6 bg-white/10 border rounded-2xl text-white placeholder:text-white/20 outline-none transition-all font-mono 
-    ${
-      wrong
-        ? "border-white/40 bg-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-        : "border-white/10 focus:ring-2 focus:ring-white/20"
-    }`}
+              // Removed all conditional logic for the border - it stays clean
+              className="w-full py-4 px-6 bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-white/20 outline-none focus:border-white/40 transition-all duration-300 font-mono"
             />
+
+            {/* Error Message: Using absolute to keep layout 100% still */}
+            <div className="absolute -bottom-6 left-2">
+              <AnimatePresence>
+                {wrong && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="text-[9px] text-white/40 font-bold uppercase tracking-[0.25em]"
+                  >
+                    // Invalid Code - Are you not a teacher?_
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           <button
             onClick={handleSubmit}
-            className="w-full py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-gray-300 transition-colors cursor-pointer uppercase tracking-widest text-xs"
+            className="mt-4 bg-white text-[#125C9B] w-full py-4 font-black rounded-2xl transition-all cursor-pointer uppercase tracking-widest text-xs hover:bg-gray-200"
           >
             Verify Identity
           </button>
-          {wrong && (
-            <motion.p
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="text-[10px] text-red-400 font-bold uppercase tracking-tighter mt-2 ml-2"
-            >
-              Invalid access key. Please try again.
-            </motion.p>
-          )}
-          {/* Go Back Button */}
+
           <button
             onClick={() => navigate("/signup")}
             className="w-full text-white/40 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors cursor-pointer"

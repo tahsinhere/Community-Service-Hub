@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = ({ onLogin }) => {
+  const navigate = useNavigate();
   return (
     <div className="flex items-center justify-center py-32 px-4 selection:bg-white/30">
       <motion.div
@@ -67,7 +69,10 @@ const SignUp = ({ onLogin }) => {
 
         {/* Teacher Entry */}
         <div className="mt-8 pt-6 border-t border-white/10 text-center">
-          <button className="w-full py-4 bg-white/10 border border-white/20 text-white font-bold rounded-2xl hover:bg-white/20 transition-all text-sm cursor-pointer flex items-center justify-center gap-2 group">
+          <button
+            onClick={() => navigate("/secretCode")}
+            className="w-full py-4 bg-white/10 border border-white/20 text-white font-bold rounded-2xl hover:bg-white/20 transition-all text-sm cursor-pointer flex items-center justify-center gap-2 group"
+          >
             <span>Teacher Dashboard</span>
             <span className="text-lg group-hover:translate-x-1 transition-transform">
               →

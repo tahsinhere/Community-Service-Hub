@@ -8,6 +8,7 @@ import { supabase } from "./backend/supabase";
 import LoadingCard from "./components/LoadingCard";
 import type { User } from "@supabase/supabase-js";
 import SignUp from "./components/SignUp";
+import SecretCode from "./components/teacherComponents/secretCode";
 
 interface SingleObject {
   id: number;
@@ -100,6 +101,7 @@ function App() {
           />
 
           <Route path="/signup" element={<SignUp onLogin={handleLogin} />} />
+          <Route path="/secretCode" element={<SecretCode />} />
         </Routes>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
-const SignUp = ({ onLogin }) => {
+const SignUp = ({ onLogin, user }) => {
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-center py-32 px-4 selection:bg-white/30">
@@ -68,17 +68,33 @@ const SignUp = ({ onLogin }) => {
         </button>
 
         {/* Teacher Entry */}
+        {/* Teacher Entry Section */}
         <div className="mt-8 pt-6 border-t border-white/10 text-center">
           <button
-            onClick={() => navigate("/secretCode")}
-            className="w-full py-4 bg-white/10 border border-white/20 text-white font-bold rounded-2xl hover:bg-white/20 transition-all text-sm cursor-pointer flex items-center justify-center gap-2 group"
+            onClick={() => {
+              if (user) {
+                navigate("/secretCode");
+              }
+            }}
+            className={`w-full py-4 border rounded-2xl transition-all text-sm flex flex-col items-center justify-center gap-0 group ${
+              user
+                ? "bg-white/10 border-white/20 text-white cursor-pointer hover:bg-white/20"
+                : "bg-white/5 border-white/5 text-white/40 cursor-not-allowed"
+            }`}
           >
-            <span>Teacher Dashboard</span>
-            <span className="text-lg group-hover:translate-x-1 transition-transform">
-              →
+            <span className="font-bold uppercase tracking-widest text-[11px]">
+              Teacher Access
             </span>
+
+            {!user && (
+              <span className="text-[9px] text-orange-400/80 font-medium ">
+                (Login Required)
+              </span>
+            )}
           </button>
-          <p className="text-[10px] text-white/40 mt-3 font-medium uppercase  tracking-tighter italic">
+
+          {/* This adds the descriptive text back underneath for better context */}
+          <p className="text-[10px] text-white/40 mt-3 font-medium uppercase tracking-tighter italic">
             [Code Required] Authorized Only For Teachers
           </p>
         </div>

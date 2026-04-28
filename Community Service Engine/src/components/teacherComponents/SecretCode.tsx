@@ -13,7 +13,7 @@ const SecretCode = () => {
     if (input === import.meta.env.VITE_SECRET_CODE) {
       navigate("/TeacherDashboard");
     } else {
-      console.log("Wrong Code");
+      return <div> No </div>;
     }
   };
 

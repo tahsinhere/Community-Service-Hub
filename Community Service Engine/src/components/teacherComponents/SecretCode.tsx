@@ -1,10 +1,21 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 const SecretCode = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (input === import.meta.env.VITE_SECRET_CODE) {
+      navigate("/TeacherDashboard");
+    } else {
+      console.log("Wrong Code");
+    }
+  };
 
   return (
     <div className="flex items-center justify-center py-50 px-4">
@@ -36,14 +47,17 @@ const SecretCode = () => {
               Enter Access Key
             </label>
             <input
-                onChange={}
+              onChange={handleChange}
               type="password"
               placeholder="••••••••"
               className="w-full py-4 px-6 bg-white/10 border border-white/10 rounded-2xl text-white placeholder:text-white/20 outline-none focus:ring-2 focus:ring-white/20 transition-all font-mono"
             />
           </div>
 
-          <button className="w-full py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer uppercase tracking-widest text-xs">
+          <button
+            onClick={handleSubmit}
+            className="w-full py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-gray-300 transition-colors cursor-pointer uppercase tracking-widest text-xs"
+          >
             Verify Identity
           </button>
 

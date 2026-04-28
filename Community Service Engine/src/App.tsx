@@ -26,6 +26,7 @@ function App() {
   const [opportunities, setOpportunities] = useState<SingleObject[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+  const [teacher, setTeacher] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -65,7 +66,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-900 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] bg-size-[20px_20px]">
-      <Navbar />
+      <Navbar teacher={teacher} />
 
       <div className="w-full max-w-[90%] mx-auto">
         <Routes>

@@ -29,7 +29,7 @@ const SecretCode = () => {
     <div className="flex items-center justify-center py-50 px-4">
       <motion.div
         initial={{ opacity: 1, y: 20 }}
-        whileInView={{ opacity: 1, y: 2 }}
+        whileInView={{ opacity: 1, y: 5 }}
         viewport={{ once: true }}
         transition={{
           type: "spring",

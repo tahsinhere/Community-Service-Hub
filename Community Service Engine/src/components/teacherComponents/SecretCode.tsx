@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const SecretCode = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
+  const [wrong, setWrong] = useState(false);
 
   const handleChange = (e) => {
     setInput(e.target.value);
@@ -13,7 +14,7 @@ const SecretCode = () => {
     if (input === import.meta.env.VITE_SECRET_CODE) {
       navigate("/TeacherDashboard");
     } else {
-      return <div> No </div>;
+      setWrong(true);
     }
   };
 
@@ -46,11 +47,18 @@ const SecretCode = () => {
             <label className="block text-[10px] text-white/50 font-bold uppercase tracking-widest mb-2 ml-2">
               Enter Access Key
             </label>
-            <input
+            <motion.input
               onChange={handleChange}
               type="password"
               placeholder="••••••••"
-              className="w-full py-4 px-6 bg-white/10 border border-white/10 rounded-2xl text-white placeholder:text-white/20 outline-none focus:ring-2 focus:ring-white/20 transition-all font-mono"
+              animate={wrong ? { x: [-1, 1, -1, 1, 0] } : { x: 0 }}
+              transition={{ duration: 0.2 }}
+              className={`w-full py-4 px-6 bg-white/10 border rounded-2xl text-white placeholder:text-white/20 outline-none transition-all font-mono 
+    ${
+      wrong
+        ? "border-white/40 bg-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+        : "border-white/10 focus:ring-2 focus:ring-white/20"
+    }`}
             />
           </div>
 

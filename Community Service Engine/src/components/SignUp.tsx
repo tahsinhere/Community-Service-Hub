@@ -67,7 +67,6 @@ const SignUp = ({ onLogin, user }) => {
           <span className="text-sm tracking-tight">Continue with Google</span>
         </button>
 
-        {/* Teacher Entry */}
         {/* Teacher Entry Section */}
         <div className="mt-8 pt-6 border-t border-white/10 text-center">
           <button

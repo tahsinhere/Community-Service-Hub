@@ -8,7 +8,7 @@ import { supabase } from "./backend/supabase";
 import LoadingCard from "./components/LoadingCard";
 import type { User } from "@supabase/supabase-js";
 import SignUp from "./components/SignUp";
-import SecretCode from "./components/teacherComponents/secretCode";
+import SecretCode from "./components/teacherComponents/SecretCode";
 import TeacherDashboard from "./components/teacherComponents/TeacherDashboard";
 
 interface SingleObject {

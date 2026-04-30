@@ -33,8 +33,31 @@ function App() {
       setUser(session?.user ?? null);
     });
     //prettier-ignore
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange( async (_event, session)  => {
+    const currentUser =  session?.user ?? null
+
+      if (currentUser != null ){
+        const {data, error}= await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', currentUser.id)
+        .single() 
+
+       if (data.role === 'teacher') {
+        setTeacher(true);
+      }
+      else {
+        setTeacher(false)
+      }
+      } else {
+        setTeacher(false); 
+      }
+
+   
+
+
+
+
     });
     return () => subscription.unsubscribe();
   }, []);

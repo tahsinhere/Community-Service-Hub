@@ -106,7 +106,7 @@ function App() {
             path="/signup"
             element={<SignUp onLogin={handleLogin} user={user} />}
           />
-          <Route path="/secretCode" element={<SecretCode />} />
+          <Route path="/secretCode" user={user} element={<SecretCode />} />
 
           <Route path="/TeacherDashboard" element={<TeacherDashboard />} />
         </Routes>

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "../../backend/supabase";
 
-const SecretCode = () => {
+const SecretCode = ({ user }) => {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [wrong, setWrong] = useState(false);
@@ -17,8 +18,19 @@ const SecretCode = () => {
       handleSubmit();
     }
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (input === import.meta.env.VITE_SECRET_CODE) {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ role: "teacher" })
+        .eq("id", user.id);
+
+      if (error) {
+        console.log("Error in supabase update", error.message);
+        setWrong(true);
+        return;
+      }
+
       navigate("/TeacherDashboard");
     } else {
       setWrong(true);

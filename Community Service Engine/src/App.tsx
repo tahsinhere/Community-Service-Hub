@@ -43,7 +43,7 @@ function App() {
         .eq('id', currentUser.id)
         .single() 
 
-       if (data.role === 'teacher') {
+       if (data?.role === 'teacher') {
         setTeacher(true);
       }
       else {
@@ -52,11 +52,6 @@ function App() {
       } else {
         setTeacher(false); 
       }
-
-   
-
-
-
 
     });
     return () => subscription.unsubscribe();
@@ -129,7 +124,10 @@ function App() {
             path="/signup"
             element={<SignUp onLogin={handleLogin} user={user} />}
           />
-          <Route path="/secretCode" user={user} element={<SecretCode />} />
+          <Route
+            path="/secretCode"
+            element={<SecretCode setTeacher={setTeacher} user={user} />}
+          />
 
           <Route path="/TeacherDashboard" element={<TeacherDashboard />} />
         </Routes>

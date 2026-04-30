@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "../../backend/supabase";
 
-const SecretCode = ({ user }) => {
+const SecretCode = ({ user, setTeacher }) => {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [wrong, setWrong] = useState(false);
@@ -23,13 +23,13 @@ const SecretCode = ({ user }) => {
       const { error } = await supabase
         .from("profiles")
         .update({ role: "teacher" })
-        .eq("id", user.id);
-
+        .eq("id", user?.id);
       if (error) {
         console.log("Error in supabase update", error.message);
         setWrong(true);
         return;
       }
+      setTeacher(true);
 
       navigate("/TeacherDashboard");
     } else {

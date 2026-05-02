@@ -10,6 +10,7 @@ import type { User } from "@supabase/supabase-js";
 import SignUp from "./components/SignUp";
 import SecretCode from "./components/teacherComponents/SecretCode";
 import TeacherDashboard from "./components/teacherComponents/TeacherDashboard";
+import TeacherAccess from "./components/teacherComponents/TeacherAccess";
 
 interface SingleObject {
   id: number;
@@ -24,47 +25,11 @@ interface SingleObject {
 
 function App() {
   const [opportunities, setOpportunities] = useState<SingleObject[]>([]);
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [teacher, setTeacher] = useState(false);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-    //prettier-ignore
-    const { data: { subscription } } = supabase.auth.onAuthStateChange( async (_event, session)  => {
-    const currentUser =  session?.user ?? null
-
-      if (currentUser != null ){
-        const {data, error}= await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', currentUser.id)
-        .single() 
-
-       if (data?.role === 'teacher') {
-        setTeacher(true);
-      }
-      else {
-        setTeacher(false)
-      }
-      } else {
-        setTeacher(false); 
-      }
-
-    });
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin,
-      },
-    });
-  };
+  const [dataLoading, setDataLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const fetchOpportunities = async () => {
@@ -77,14 +42,75 @@ function App() {
         setOpportunities(data || []);
       }
 
-      setLoading(false);
+      setDataLoading(false);
     };
     fetchOpportunities();
   }, []);
 
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.log("Error logging out:", error.message);
+    } else {
+      // Clear states manually just to be safe
+      setUser(null);
+      setTeacher(false);
+      // Optional: redirect to home
+      window.location.href = "/";
+    }
+  };
+  useEffect(() => {
+    const checkUserRole = async (currentUser: User | null) => {
+      if (currentUser) {
+        const { data } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", currentUser.id)
+          .single();
+
+        setTeacher(data?.role === "teacher");
+      } else {
+        setTeacher(false);
+      }
+      setAuthLoading(false);
+    };
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const startUser = session?.user ?? null;
+      setUser(startUser);
+      checkUserRole(startUser);
+    });
+    //prettier-ignore
+    const { data: { subscription } } = supabase.auth.onAuthStateChange( async (_event, session)  => {
+    const activeUser = session?.user ?? null;
+    setUser(activeUser);
+    checkUserRole(activeUser); 
+      
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogin = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+  };
+
+  const appReady = !dataLoading && !authLoading;
+  if (!appReady) {
+    return (
+      <div className="min-h-screen bg-neutral-900 flex items-center justify-center">
+        <LoadingCard />
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-neutral-900 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] bg-size-[20px_20px]">
-      <Navbar teacher={teacher} />
+      <Navbar teacher={teacher} onLogout={handleLogout} user={user} />
 
       <div className="w-full max-w-[90%] mx-auto">
         <Routes>
@@ -97,16 +123,9 @@ function App() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-8 ">
-                  {loading ? (
-                    <LoadingCard />
-                  ) : (
-                    opportunities.map((oneObject) => (
-                      <OpportunityCard
-                        key={oneObject.id}
-                        oneObject={oneObject}
-                      />
-                    ))
-                  )}
+                  {opportunities.map((oneObject) => (
+                    <OpportunityCard key={oneObject.id} oneObject={oneObject} />
+                  ))}
                 </div>
               </div>
             }
@@ -129,6 +148,7 @@ function App() {
             element={<SecretCode setTeacher={setTeacher} user={user} />}
           />
 
+          <Route path="/TeacherAccess" element={<TeacherAccess />} />
           <Route path="/TeacherDashboard" element={<TeacherDashboard />} />
         </Routes>
       </div>

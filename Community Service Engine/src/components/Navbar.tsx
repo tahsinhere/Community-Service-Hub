@@ -47,7 +47,7 @@ const Navbar = ({ teacher, onLogout, user }) => {
               className="flex items-center gap-2 text-[#125C9B] hover:text-blue-400 font-bold transition-colors uppercase tracking-widest text-[11px] border border-[#125C9B]/20 px-3 py-1.5 rounded-lg bg-[#125C9B]/5"
             >
               <LuLayoutDashboard className="text-lg" />
-              Dashboard
+              My Posts
             </Link>
           )}
 
@@ -55,15 +55,15 @@ const Navbar = ({ teacher, onLogout, user }) => {
           {!teacher && (
             <button
               onClick={handleTeacherAccessClick}
-              className="flex items-center gap-2 text-gray-400 hover:text-white font-bold transition-colors cursor-pointer text-[11px] uppercase tracking-[0.2em]"
+              className="flex items-center gap-2 text-gray-400 hover:text-white font-bold transition-colors cursor-pointer text-[12px] tracking-[0.2em]"
             >
               <LuLock className="text-[15px]" />
               Teacher Access
             </button>
           )}
 
-          <button className="flex items-center gap-2 text-gray-400 hover:text-white font-medium transition-colors cursor-pointer text-sm">
-            <LuBookOpen className="text-lg" />
+          <button className="flex items-center gap-2 text-gray-400 hover:text-white font-bold transition-colors cursor-pointer text-[12px] tracking-[0.2em]">
+            <LuBookOpen className="text-[15px]" />
             User Guide
           </button>
 
@@ -79,7 +79,7 @@ const Navbar = ({ teacher, onLogout, user }) => {
           ) : (
             <button
               onClick={() => navigate("/signup")}
-              className="cursor-pointer px-6 py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all shadow-lg shadow-white/5 flex items-center gap-2"
+              className="cursor-pointer px-4 py-1.5 bg-white text-black font-bold rounded-xl hover:bg-gray-300 transition-all shadow-lg shadow-white/5 flex items-center gap-2"
             >
               <LuUserPlus className="text-lg" />
               Sign Up

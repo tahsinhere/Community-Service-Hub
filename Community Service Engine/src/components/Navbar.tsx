@@ -71,7 +71,7 @@ const Navbar = ({ teacher, onLogout, user }) => {
           {user ? (
             <button
               onClick={onLogout}
-              className="cursor-pointer px-4 py-2 bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl hover:bg-red-500 hover:text-white transition-all text-xs uppercase tracking-widest flex items-center gap-2"
+              className="cursor-pointer px-4 py-1.5 bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl hover:bg-red-600/20 hover:text-white transition-all text-xs uppercase tracking-widest flex items-center gap-2"
             >
               <LuLogOut className="text-lg" />
               Logout

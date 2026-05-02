@@ -19,21 +19,16 @@ const SecretCode = ({ user, setTeacher }) => {
     }
   };
   const handleSubmit = async () => {
-    if (input === import.meta.env.VITE_SECRET_CODE) {
-      const { error } = await supabase
-        .from("profiles")
-        .update({ role: "teacher" })
-        .eq("id", user?.id);
-      if (error) {
-        console.log("Error in supabase update", error.message);
-        setWrong(true);
-        return;
-      }
-      setTeacher(true);
+    const { error } = await supabase.rpc("verify_teacher", {
+      provided_code: input,
+    });
 
-      navigate("/TeacherDashboard");
-    } else {
+    if (error) {
+      console.error("Wrong code or there was  an error", error.message);
       setWrong(true);
+    } else {
+      setTeacher(true);
+      navigate("/TeacherDashboard");
     }
   };
 

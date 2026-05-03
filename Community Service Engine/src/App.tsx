@@ -47,18 +47,6 @@ function App() {
     fetchOpportunities();
   }, []);
 
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.log("Error logging out:", error.message);
-    } else {
-      // Clear states manually just to be safe
-      setUser(null);
-      setTeacher(false);
-      // Optional: redirect to home
-      window.location.href = "/";
-    }
-  };
   useEffect(() => {
     const checkUserRole = async (currentUser: User | null) => {
       if (currentUser) {
@@ -98,6 +86,19 @@ function App() {
         redirectTo: window.location.origin,
       },
     });
+  };
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.log("Error logging out:", error.message);
+    } else {
+      // Clear states manually just to be safe
+      setUser(null);
+      setTeacher(false);
+      // Optional: redirect to home
+      window.location.href = "/";
+    }
   };
 
   return (

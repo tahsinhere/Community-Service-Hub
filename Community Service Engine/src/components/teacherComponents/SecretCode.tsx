@@ -8,13 +8,13 @@ const SecretCode = ({ user, setTeacher }) => {
   const [input, setInput] = useState("");
   const [wrong, setWrong] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (event) => {
     setWrong(false);
-    setInput(e.target.value);
+    setInput(event.target.value);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
       handleSubmit();
     }
   };

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "../../backend/supabase";
+import { LuChevronRight } from "react-icons/lu";
 
 const SecretCode = ({ user, setTeacher }) => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const SecretCode = ({ user, setTeacher }) => {
         animate={
           wrong
             ? {
-                // Increased range from 5 to 12 for a more noticeable snap
+                // Increased range
                 x: [0, -3, 3, -3, 8, 0, 3, 0],
                 // Keeps the subtle scale compression for a "impact" feel
 
@@ -81,7 +82,6 @@ const SecretCode = ({ user, setTeacher }) => {
               onKeyDown={handleKeyDown}
               type="password"
               placeholder="••••••••"
-              // Removed all conditional logic for the border - it stays clean
               className="w-full py-4 px-6 bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-white/20 outline-none focus:border-white/40 transition-all duration-300 font-mono"
             />
 
@@ -93,7 +93,7 @@ const SecretCode = ({ user, setTeacher }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="text-[9px] text-white/40 font-bold uppercase tracking-[0.25em]"
+                    className="   text-[9px] text-red-300 font-bold uppercase tracking-[0.25em]"
                   >
                     // Invalid Code - Are you not a teacher?_
                   </motion.p>
@@ -104,16 +104,21 @@ const SecretCode = ({ user, setTeacher }) => {
 
           <button
             onClick={handleSubmit}
-            className="mt-4 bg-white text-[#125C9B] w-full py-4 font-black rounded-2xl transition-all cursor-pointer uppercase tracking-widest text-xs hover:bg-gray-200"
+            className="mt-9 group cursor-pointer px-15 py-4 bg-white/5 border border-white/20 text-white font-bold rounded-xl 
+                           hover:text-white/40 flex items-center justify-center mx-auto 
+                          transition-all duration-300 ease-out  "
           >
-            Verify Identity
+            <span className="text-sm uppercase tracking-tighter ">
+              Verify Code
+            </span>
+            <LuChevronRight className="ml-2 text-xl opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
           </button>
 
           <button
-            onClick={() => navigate("/signup")}
-            className="w-full text-white/40 text-[10px] font-bold uppercase tracking-widest hover:text-white transition-colors cursor-pointer"
+            onClick={() => navigate("/")}
+            className="cursor-pointer  w-full  text-white/30 hover:text-white/80 text-[11px] font-bold uppercase tracking-widest transition-colors"
           >
-            ← Back to Login
+            Back to Opportunities
           </button>
         </div>
       </motion.div>

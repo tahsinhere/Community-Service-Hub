@@ -5,16 +5,16 @@ import {
   LuShieldCheck,
   LuLayoutDashboard,
   LuLogOut,
-  LuLock, // New Icon for Teacher Access
+  LuLock,
 } from "react-icons/lu";
 
 const Navbar = ({ teacher, onLogout, user }) => {
   const navigate = useNavigate();
 
-  // The logic: Where do we send them when they click "Teacher Access"?
+  // The logic: when they click "Teacher Access"?
   const handleTeacherAccessClick = () => {
     if (!user) {
-      // If guest -> Send to the "Gate" page we made
+      // If guest -> Send to the "Gate" page
       navigate("/TeacherAccess");
     } else {
       // If logged in student -> Send straight to the secret code entry

@@ -48,6 +48,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    //checking the currentUser role, and currentUser is either null or User
     const checkUserRole = async (currentUser: User | null) => {
       if (currentUser) {
         const { data } = await supabase

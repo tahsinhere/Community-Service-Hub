@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "../../backend/supabase";
 import { LuChevronRight } from "react-icons/lu";
 
-const SecretCode = ({ user, setTeacher }) => {
+const SecretCode = ({ setTeacher }) => {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [wrong, setWrong] = useState(false);

@@ -56,25 +56,27 @@ function App() {
           .select("role")
           .eq("id", currentUser.id)
           .single();
-
-        setTeacher(data?.role === "teacher");
+        if (data?.role === "teacher") {
+          setTeacher(true);
+        }
       } else {
         setTeacher(false);
       }
       setAuthLoading(false);
     };
-
+    // this is for the intial start up of the page
     supabase.auth.getSession().then(({ data: { session } }) => {
       const startUser = session?.user ?? null;
       setUser(startUser);
       checkUserRole(startUser);
     });
-    //prettier-ignore
-    const { data: { subscription } } = supabase.auth.onAuthStateChange( async (_event, session)  => {
-    const activeUser = session?.user ?? null;
-    setUser(activeUser);
-    checkUserRole(activeUser); 
-      
+    //prettier-ignore   // this is active monitoring for the active user already with a user and role
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const activeUser = session?.user ?? null;
+      setUser(activeUser);
+      checkUserRole(activeUser);
     });
 
     return () => subscription.unsubscribe();

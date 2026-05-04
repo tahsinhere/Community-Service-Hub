@@ -35,7 +35,7 @@ const CreateOppor = ({ user }) => {
     "[appearance:none] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none  w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/20 outline-none focus:ring-1 focus:ring-white/30 focus:bg-white/10 transition-all duration-200 text-sm";
 
   const labelClass =
-    "text-[10px] uppercase tracking-widest text-blue-200/40 font-bold mb-1.5 ml-1";
+    "text-[10px] uppercase tracking-widest text-blue-200 font-bold mb-1.5 ml-1";
 
   return (
     <div className="flex items-center justify-center py-40 px-4">

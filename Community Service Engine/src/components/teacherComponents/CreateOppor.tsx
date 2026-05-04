@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuChevronDown, LuClock } from "react-icons/lu";
+import { supabase } from "../../backend/supabase";
 
 const CreateOppor = ({ user }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -28,6 +29,16 @@ const CreateOppor = ({ user }) => {
 
     if (type != "number") {
       setForm({ ...form, [name]: value });
+    }
+  };
+
+  const handleSubmit = async () => {
+    const { error } = await supabase.from("opportunites").insert([form]);
+    if (error) {
+      console.log("There was an error", error);
+      alert("Did not Post");
+    } else {
+      alert("Posted Successfully");
     }
   };
 
@@ -177,7 +188,10 @@ const CreateOppor = ({ user }) => {
             </AnimatePresence>
           </div>
 
-          <button className="  cursor-pointer   w-full py-4 bg-white/95 text-[#125C9B] font-black rounded-xl shadow-xl transition-all uppercase tracking-[0.2em] text-[11px] mt-4">
+          <button
+            onClick={handleSubmit}
+            className="  cursor-pointer   w-full py-4 bg-white/95 text-[#125C9B] font-black rounded-xl shadow-xl transition-all uppercase tracking-[0.2em] text-[11px] mt-4"
+          >
             Publish Opportunity
           </button>
         </form>

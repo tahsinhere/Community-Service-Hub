@@ -26,7 +26,8 @@ const TeacherDashboard = ({ user }) => {
   });
 
   const handleInput = (event) => {
-    setForm({ ...form, teacher: event.target.value });
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
   };
 
   return (
@@ -45,7 +46,14 @@ const TeacherDashboard = ({ user }) => {
       >
         <input
           className="px-4 py-4 bg-white"
+          name="teacher"
           value={form.teacher}
+          onChange={handleInput}
+        ></input>
+        <input
+          className="px-4 py-4 bg-white"
+          name="task"
+          value={form.task}
           onChange={handleInput}
         ></input>
       </motion.div>

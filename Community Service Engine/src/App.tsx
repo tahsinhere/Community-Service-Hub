@@ -1,5 +1,5 @@
 import OpportunityCard from "./components/OpportunityCard";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import OpportunityDetail from "./components/OpportunityDetail";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -30,6 +30,8 @@ function App() {
 
   const [dataLoading, setDataLoading] = useState(true);
   const [authLoading, setAuthLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOpportunities = async () => {
@@ -97,10 +99,13 @@ function App() {
       console.log("Error logging out:", error.message);
     } else {
       // Clear states manually just to be safe
-      setUser(null);
-      setTeacher(false);
-      // Optional: redirect to home
-      window.location.href = "/";
+      //  redirect to home
+      const home = () => {
+        setUser(null);
+        setTeacher(false);
+        navigate("/");
+      };
+      home();
     }
   };
 

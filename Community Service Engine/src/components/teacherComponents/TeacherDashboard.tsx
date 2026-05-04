@@ -4,7 +4,7 @@ import { LuChevronDown, LuClock } from "react-icons/lu";
 import CreateOppor from "./CreateOppor";
 
 const TeacherDashboard = ({ user }) => {
-  return <CreateOppor />;
+  return <CreateOppor user={user} />;
 };
 
 export default TeacherDashboard;

@@ -111,7 +111,7 @@ const CreateOppor = ({ user }) => {
             <button
               type="button"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="flex items-center justify-between w-full p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 transition-colors group"
+              className=" cursor-pointer  flex items-center justify-between w-full p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 transition-colors group"
             >
               <span className="text-[10px] font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
                 {isExpanded ? "Less Info" : "Add Description & Hours"}

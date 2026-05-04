@@ -1,5 +1,5 @@
 import OpportunityCard from "./components/OpportunityCard";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import OpportunityDetail from "./components/OpportunityDetail";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -157,9 +157,15 @@ function App() {
             path="/secretCode"
             element={<SecretCode setTeacher={setTeacher} user={user} />}
           />
-
+          {/* add conditional route logic to this later */}
           <Route path="/TeacherAccess" element={<TeacherAccess />} />
-          <Route path="/TeacherDashboard" element={<TeacherDashboard />} />
+
+          <Route
+            path="/TeacherDashboard"
+            element={
+              teacher ? <TeacherDashboard user={user} /> : <Navigate to="/" />
+            }
+          />
         </Routes>
       </div>
     </div>

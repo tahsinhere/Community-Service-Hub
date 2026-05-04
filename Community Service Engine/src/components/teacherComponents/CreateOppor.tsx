@@ -13,7 +13,7 @@ const CreateOppor = ({ user }) => {
     hours: 0,
     max_spots: 0,
     description: "",
-    id: user?.id,
+    teacher_id: user?.id,
   });
 
   const handleInput = (event) => {
@@ -32,8 +32,9 @@ const CreateOppor = ({ user }) => {
     }
   };
 
-  const handleSubmit = async () => {
-    const { error } = await supabase.from("opportunites").insert([form]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { error } = await supabase.from("opportunities").insert([form]);
     if (error) {
       console.log("There was an error", error);
       alert("Did not Post");
@@ -115,6 +116,17 @@ const CreateOppor = ({ user }) => {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="flex flex-col">
+            <label className={labelClass}>Time / Date</label>
+            <input
+              className={inputClass}
+              name="time"
+              placeholder="e.g. Monday @ 3:30 PM"
+              value={form.time}
+              onChange={handleInput}
+            />
           </div>
 
           {/* Progressive Disclosure Section */}

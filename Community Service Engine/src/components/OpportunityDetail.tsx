@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "../backend/supabase";
+import { toast } from "sonner";
 
 interface SingleObject {
   oppor: {
@@ -26,7 +27,7 @@ const OpportunityDetail = ({ oppor, user }: SingleObject) => {
 
   const handleVolunteer = async () => {
     if (!user) {
-      alert("Sign Up first");
+      toast.error("Sign up before volunteering");
       return;
     }
 
@@ -35,10 +36,10 @@ const OpportunityDetail = ({ oppor, user }: SingleObject) => {
       .insert([{ opportunity_id: selectedOpp.id, student_id: user.id }]);
 
     if (error) {
-      console.log("Error details:", error);
+      toast.error("Volunteer failed. Try again later");
+    } else {
+      toast.success("Successfully volunteered!");
     }
-
-    alert("Successfully volunteered!");
   };
 
   if (selectedOpp === undefined) {
@@ -143,7 +144,7 @@ const OpportunityDetail = ({ oppor, user }: SingleObject) => {
 
         <button
           onClick={handleVolunteer}
-          className="px-12 py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-blue-50 transition-all active:scale-95 shadow-xl"
+          className="cursor-pointer px-12 py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-blue-50 transition-all active:scale-95 shadow-xl"
         >
           Volunteer Now
         </button>

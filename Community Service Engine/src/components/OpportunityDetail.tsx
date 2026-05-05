@@ -3,25 +3,27 @@ import { motion } from "framer-motion";
 import { supabase } from "../backend/supabase";
 
 interface SingleObject {
-  id: number;
-  task: string;
-  teacher: string;
-  location: string;
-  time: string;
-  hours: number;
-  max_spots: number;
-  description: string;
+  oppor: {
+    id: number;
+    task: string;
+    teacher: string;
+    location: string;
+    time: string;
+    hours: number;
+    max_spots: number;
+    description: string;
+  };
 }
 
-interface WholeArray {
-  oppor: SingleObject[];
-}
-
-const OpportunityDetail = ({ oppor, user }: WholeArray) => {
+const OpportunityDetail = ({ oppor, user }: SingleObject) => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const selectedOpp = oppor.find((item) => item.id === Number(id));
+
+  const spotTaken = selectedOpp.signups?.[0]?.count || 0;
+
+  const spotsLeft = selectedOpp.max_spots - spotTaken;
+
   const handleVolunteer = async () => {
     if (!user) {
       alert("Sign Up first");
@@ -132,9 +134,9 @@ const OpportunityDetail = ({ oppor, user }: WholeArray) => {
               Spots
             </p>
             <p
-              className={`text-lg font-bold ${selectedOpp.max_spots < 5 ? "text-amber-300" : "text-emerald-300"}`}
+              className={`text-lg font-bold ${spotsLeft < 5 ? "text-amber-300" : "text-emerald-300"}`}
             >
-              {selectedOpp.max_spots} Left
+              {spotsLeft} Left
             </p>
           </div>
         </div>

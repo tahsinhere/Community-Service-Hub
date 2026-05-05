@@ -2,6 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "../backend/supabase";
 import { toast } from "sonner";
+import CannotFind from "./CannotFind";
+import LoadingCard from "./LoadingCard";
 import { useEffect, useState } from "react";
 
 interface SingleObject {
@@ -17,78 +19,64 @@ interface SingleObject {
   };
 }
 
-const OpportunityDetail = ({ oppor, user }: SingleObject) => {
+const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [signUI, setSignUI] = useState(0);
+  const [isSubmit, setSubmit] = useState(false);
 
   const selectedOpp = oppor.find((item) => item.id === Number(id));
 
-  const spotTaken = selectedOpp.signups?.[0]?.count || 0 + signUI;
+  useEffect(() => {
+    const checkButton = async () => {
+      // 1. If there's no user or the opportunity hasn't loaded, stop.
+      if (!user || !selectedOpp) return;
+
+      // 2. Ask Supabase: "Does a signup exist for this student + this opp?"
+      const { data } = await supabase
+        .from("signups")
+        .select("id")
+        .eq("opportunity_id", selectedOpp.id)
+        .eq("student_id", user.id)
+        .maybeSingle();
+
+      // 3. If data exists, it means we found a match!
+      if (data) {
+        setSubmit(true);
+      }
+    };
+
+    checkButton();
+  }, [user, selectedOpp.id, selectedOpp]);
+
+  if (dataLoading) {
+    return <LoadingCard />;
+  }
+
+  if (!selectedOpp) {
+    return <CannotFind id={id} />;
+  }
+
+  const spotTaken = selectedOpp.signups?.[0]?.count || 0;
 
   const spotsLeft = selectedOpp.max_spots - spotTaken;
-  
-useEffect(()=>{
-const checkUser = async () =>{
-  if (!user || !selectedOpp)
-}
-
-
-  
-})
-
 
   const handleVolunteer = async () => {
     if (!user) {
-      toast.error("Please sign in to volunteer!");
+      toast.error("Please Sign Up First");
       return;
     }
-
-    // The Confirmation Dialog
-    const confirmed = window.confirm(
-      "Are you sure you want to volunteer? You cannot undo this action.",
-    );
-
-    if (!confirmed) return; // Exit if they click 'Cancel'
 
     const { error } = await supabase
       .from("signups")
       .insert([{ opportunity_id: selectedOpp.id, student_id: user.id }]);
 
     if (error) {
-      toast.error("Volunteer failed. Try again later");
-    } else {
-      toast.success("Successfully volunteered!");
-      setSignUI(1);
+      console.log("Error details:", error);
     }
+
+    toast.success("Successfuly Volunteered");
   };
 
-  if (selectedOpp === undefined) {
-    return (
-      <div className="flex flex-col items-center justify-center p-30 text-center">
-        <motion.div
-          initial={{ opacity: 1, y: 20 }}
-          whileInView={{ opacity: 1, y: 2 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 80, damping: 20 }}
-          className="max-w-md w-full bg-white/5 backdrop-blur-xl border border-white/10 p-12 rounded-3xl"
-        >
-          <div className="text-6xl mb-4">🔍</div>
-          <h1 className="text-3xl font-black text-white mb-2">Not Found</h1>
-          <p className="text-gray-400 mb-8">
-            We couldn't find the opportunity with ID:{" "}
-            <span className="text-[#125C9B] font-mono">{id}</span>
-          </p>
-          <button
-            onClick={() => navigate("/")}
-            className="w-full py-3 bg-[#125C9B] text-white font-bold rounded-xl hover:bg-[#054e8d] transition-colors"
-          >
-            Back to Home
-          </button>
-        </motion.div>
-      </div>
-    );
-  }
   return (
     <div className="flex items-center justify-center p-6">
       <motion.div
@@ -118,7 +106,6 @@ const checkUser = async () =>{
           </p>
         </header>
 
-        {/* Grid Section - increased border opacity for better contrast on blue */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-white/20 mb-8">
           <div>
             <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
@@ -165,15 +152,14 @@ const checkUser = async () =>{
 
         <button
           onClick={handleVolunteer}
-          disabled={signUI > 0} // Disable the button after success
-          className={`px-12 py-4 font-black rounded-2xl transition-all shadow-xl 
-    ${
-      signUI > 0
-        ? "bg-emerald-500 text-white cursor-not-allowed"
-        : "bg-white text-[#125C9B] hover:bg-blue-50 active:scale-95 cursor-pointer"
-    }`}
+          disabled={isSubmit}
+          className={`px-12 py-4 font-black rounded-2xl transition-all shadow-xl ${
+            isSubmit
+              ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 cursor-not-allowed"
+              : "bg-white text-[#125C9B] hover:bg-blue-50 active:scale-95 cursor-pointer"
+          }`}
         >
-          {signUI > 0 ? "Successfully Volunteered! ✅" : "Volunteer Now"}
+          {isSubmit ? "✓ Successfully Volunteered" : "Volunteer Now"}
         </button>
       </motion.div>
     </div>

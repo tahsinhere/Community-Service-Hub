@@ -151,7 +151,11 @@ function App() {
             path="/opportunity/:id"
             element={
               <div className="flex flex-col gap-12 pt-25">
-                <OpportunityDetail user={user} oppor={opportunities} />
+                <OpportunityDetail
+                  user={user}
+                  dataLoading={dataLoading}
+                  oppor={opportunities}
+                />
               </div>
             }
           />

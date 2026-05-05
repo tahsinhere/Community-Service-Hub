@@ -36,7 +36,9 @@ function App() {
 
   useEffect(() => {
     const fetchOpportunities = async () => {
-      const { data, error } = await supabase.from("opportunities").select("*");
+      const { data, error } = await supabase
+        .from("opportunities")
+        .select("*, signups(count)");
       await new Promise((resolve) => setTimeout(resolve, 0));
 
       if (error) {

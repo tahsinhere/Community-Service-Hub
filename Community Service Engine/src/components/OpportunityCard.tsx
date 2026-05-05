@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -12,12 +11,15 @@ interface SingleObject {
     max_spots: number;
     description: string;
     id: number;
+    signups: any;
   };
 }
 
 const OpportunityCard = ({ oneObject }: SingleObject) => {
   const navigate = useNavigate();
-  const [spots, setSpots] = useState(oneObject.max_spots);
+
+  const spotTaken = oneObject.signups?.[0]?.count || 0;
+  const spotsLeft = oneObject.max_spots - spotTaken;
 
   return (
     <motion.div
@@ -53,9 +55,9 @@ const OpportunityCard = ({ oneObject }: SingleObject) => {
         {/* Spots Badge */}
         <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/10">
           <span
-            className={`text-xs font-bold ${spots < 5 ? "text-amber-300" : "text-emerald-300"}`}
+            className={`text-xs font-bold ${spotsLeft < 5 ? "text-amber-300" : "text-emerald-300"}`}
           >
-            ● {spots} {spots === 1 ? "Seat Remains" : "Seats Remain"}
+            ● {spotsLeft} {spotsLeft === 1 ? "Seat Remains" : "Seats Remain"}
           </span>
         </div>
       </div>

@@ -36,13 +36,6 @@ const OpportunityDetail = ({ oppor, user }: SingleObject) => {
 
     if (error) {
       console.log("Error details:", error);
-
-      if (error.code === "23505") {
-        alert("You are already signed up");
-      } else {
-        alert(`Error: ${error.message}`);
-      }
-      return;
     }
 
     alert("Successfully volunteered!");

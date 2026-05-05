@@ -19,10 +19,6 @@ const OpportunityCard = ({ oneObject }: SingleObject) => {
   const navigate = useNavigate();
   const [spots, setSpots] = useState(oneObject.max_spots);
 
-  if (oneObject === undefined) {
-    return <div>Sorry there was an error</div>;
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

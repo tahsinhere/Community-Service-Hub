@@ -11,6 +11,7 @@ import SignUp from "./components/SignUp";
 import SecretCode from "./components/teacherComponents/SecretCode";
 import TeacherDashboard from "./components/teacherComponents/TeacherDashboard";
 import TeacherAccess from "./components/teacherComponents/TeacherAccess";
+import NoOppor from "./components/NoOppor";
 
 interface SingleObject {
   id: number;
@@ -127,6 +128,8 @@ function App() {
                 </div>
                 {dataLoading ? (
                   <LoadingCard />
+                ) : opportunities.length === 0 ? (
+                  <NoOppor />
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-8 ">
                     {opportunities.map((oneObject) => (

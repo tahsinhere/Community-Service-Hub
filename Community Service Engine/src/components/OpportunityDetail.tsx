@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { supabase } from "../backend/supabase";
 
 interface SingleObject {
   id: number;
@@ -16,11 +17,31 @@ interface WholeArray {
   oppor: SingleObject[];
 }
 
-const OpportunityDetail = ({ oppor }: WholeArray) => {
+const OpportunityDetail = ({ oppor, user }: WholeArray) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const selectedOpp = oppor.find((item) => item.id === Number(id));
+
+  const handleVolunteer = async () => {
+    if (!user) {
+      alert("Sign Up first");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("signups")
+      .insert([{ opportunity_id: selectedOpp.id, student_id: user.id }]);
+
+    if (error) {
+      console.log("Something went wrong with sign up", error);
+    }
+    if (error.code === "23505") {
+      alert("You are already signed up");
+    } else {
+      alert("Successfully volunteered!");
+    }
+  };
 
   if (selectedOpp === undefined) {
     return (
@@ -122,7 +143,10 @@ const OpportunityDetail = ({ oppor }: WholeArray) => {
           </p>
         </section>
 
-        <button className="px-12 py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-blue-50 transition-all active:scale-95 shadow-xl">
+        <button
+          onClick={handleVolunteer}
+          className="px-12 py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-blue-50 transition-all active:scale-95 shadow-xl"
+        >
           Volunteer Now
         </button>
       </motion.div>

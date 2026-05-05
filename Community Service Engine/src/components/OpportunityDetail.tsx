@@ -22,7 +22,6 @@ const OpportunityDetail = ({ oppor, user }: WholeArray) => {
   const navigate = useNavigate();
 
   const selectedOpp = oppor.find((item) => item.id === Number(id));
-
   const handleVolunteer = async () => {
     if (!user) {
       alert("Sign Up first");
@@ -34,13 +33,17 @@ const OpportunityDetail = ({ oppor, user }: WholeArray) => {
       .insert([{ opportunity_id: selectedOpp.id, student_id: user.id }]);
 
     if (error) {
-      console.log("Something went wrong with sign up", error);
+      console.log("Error details:", error);
+
+      if (error.code === "23505") {
+        alert("You are already signed up");
+      } else {
+        alert(`Error: ${error.message}`);
+      }
+      return;
     }
-    if (error.code === "23505") {
-      alert("You are already signed up");
-    } else {
-      alert("Successfully volunteered!");
-    }
+
+    alert("Successfully volunteered!");
   };
 
   if (selectedOpp === undefined) {

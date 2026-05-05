@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { supabase } from "../backend/supabase";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 interface SingleObject {
   oppor: {
@@ -19,17 +20,36 @@ interface SingleObject {
 const OpportunityDetail = ({ oppor, user }: SingleObject) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [signUI, setSignUI] = useState(0);
+
   const selectedOpp = oppor.find((item) => item.id === Number(id));
 
-  const spotTaken = selectedOpp.signups?.[0]?.count || 0;
+  const spotTaken = selectedOpp.signups?.[0]?.count || 0 + signUI;
 
   const spotsLeft = selectedOpp.max_spots - spotTaken;
+  
+useEffect(()=>{
+const checkUser = async () =>{
+  if (!user || !selectedOpp)
+}
+
+
+  
+})
+
 
   const handleVolunteer = async () => {
     if (!user) {
-      toast.error("Sign up before volunteering");
+      toast.error("Please sign in to volunteer!");
       return;
     }
+
+    // The Confirmation Dialog
+    const confirmed = window.confirm(
+      "Are you sure you want to volunteer? You cannot undo this action.",
+    );
+
+    if (!confirmed) return; // Exit if they click 'Cancel'
 
     const { error } = await supabase
       .from("signups")
@@ -39,6 +59,7 @@ const OpportunityDetail = ({ oppor, user }: SingleObject) => {
       toast.error("Volunteer failed. Try again later");
     } else {
       toast.success("Successfully volunteered!");
+      setSignUI(1);
     }
   };
 
@@ -144,9 +165,15 @@ const OpportunityDetail = ({ oppor, user }: SingleObject) => {
 
         <button
           onClick={handleVolunteer}
-          className="cursor-pointer px-12 py-4 bg-white text-[#125C9B] font-black rounded-2xl hover:bg-blue-50 transition-all active:scale-95 shadow-xl"
+          disabled={signUI > 0} // Disable the button after success
+          className={`px-12 py-4 font-black rounded-2xl transition-all shadow-xl 
+    ${
+      signUI > 0
+        ? "bg-emerald-500 text-white cursor-not-allowed"
+        : "bg-white text-[#125C9B] hover:bg-blue-50 active:scale-95 cursor-pointer"
+    }`}
         >
-          Volunteer Now
+          {signUI > 0 ? "Successfully Volunteered! ✅" : "Volunteer Now"}
         </button>
       </motion.div>
     </div>

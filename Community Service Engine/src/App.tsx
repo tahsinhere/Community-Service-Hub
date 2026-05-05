@@ -12,6 +12,7 @@ import SecretCode from "./components/teacherComponents/SecretCode";
 import TeacherDashboard from "./components/teacherComponents/TeacherDashboard";
 import TeacherAccess from "./components/teacherComponents/TeacherAccess";
 import NoOppor from "./components/NoOppor";
+import { Toaster } from "sonner";
 
 interface SingleObject {
   id: number;
@@ -114,6 +115,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-neutral-900 bg-[radial-gradient(#ffffff05_1px,transparent_1px)] bg-size-[20px_20px]">
+      <Toaster position="top-center" richColors theme="dark" />
       {authLoading ? (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900/80 backdrop-blur-md border-b border-white/5"></nav>
       ) : (

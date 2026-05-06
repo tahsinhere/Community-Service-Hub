@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuChevronDown, LuClock } from "react-icons/lu";
 import { supabase } from "../../backend/supabase";
-
+import { toast } from "sonner";
 const CreateOppor = ({ user }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [form, setForm] = useState({
@@ -37,9 +37,9 @@ const CreateOppor = ({ user }) => {
     const { error } = await supabase.from("opportunities").insert([form]);
     if (error) {
       console.log("There was an error", error);
-      alert("Did not Post");
+      toast.error("Did not Post");
     } else {
-      alert("Posted Successfully");
+      toast.success("Posted Successfully");
     }
   };
 

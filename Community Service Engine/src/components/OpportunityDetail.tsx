@@ -80,9 +80,13 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
 
     if (error) {
       console.log("Error details:", error);
+      toast.error("Registration failed. Please try again.");
     }
 
     toast.success("Successfuly Volunteered");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
     setSubmit(true);
   };
 

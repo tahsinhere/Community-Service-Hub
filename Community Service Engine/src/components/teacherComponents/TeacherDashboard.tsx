@@ -73,7 +73,7 @@ const TeacherDashboard = ({ user }) => {
           {myOpps.map((opp) => (
             <div
               key={opp.id}
-              className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col"
+              className="bg-[#125C9B] border border-be-blue-900 rounded-3xl overflow-hidden shadow-sm flex flex-col"
             >
               {/* Card Header */}
               <div className="p-6 bg-slate-50/50 border-b border-slate-100">
@@ -145,14 +145,8 @@ const TeacherDashboard = ({ user }) => {
             onClick={() => setShowCreateModal(false)}
             className="absolute inset-0 backdrop-blur-sm"
           />
-          <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-hidden scrollbar-hide">
-            {/* Pass the close and refresh logic to the child */}
-            <CreateOppor
-              user={user}
-              onPostSuccess={() => {
-                setShowCreateModal(false);
-              }}
-            />
+          <div className="relative w-full max-w-lg max-h overflow-y-hidden ">
+            <CreateOppor user={user} />
           </div>
         </div>
       )}

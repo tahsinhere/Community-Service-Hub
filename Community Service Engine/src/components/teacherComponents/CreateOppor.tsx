@@ -63,6 +63,9 @@ const CreateOppor = ({ user }) => {
       toast.success("Opportunity Live!");
 
       setIsExpanded(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   };
 
@@ -84,7 +87,7 @@ const CreateOppor = ({ user }) => {
           />
 
           {/* Modal Container */}
-          <div className="relative z-10 w-full max-w-md bg-white/80 rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
+          <div className="relative z-10 w-full max-w-md bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
             <div className="p-8">
               <div className="space-y-6">
                 {/* Header */}

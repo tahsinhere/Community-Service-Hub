@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import CannotFind from "./CannotFind";
 import LoadingCard from "./LoadingCard";
 import { useEffect, useState } from "react";
+import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 
 interface SingleObject {
   oppor: {
@@ -24,13 +25,16 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
   const navigate = useNavigate();
   const [isSubmit, setSubmit] = useState(false);
   const [confirm, setConfirm] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const selectedOpp = oppor.find((item) => item.id === Number(id));
 
   useEffect(() => {
     const checkButton = async () => {
       // 1. If there's no user or the opportunity hasn't loaded, stop.
-      if (!user || !selectedOpp) return;
+      if (!user || !selectedOpp) {
+        setLoading(false);
+        return;
+      }
 
       // 2. Ask Supabase: Does a signup exist for this student + this opp?
       const { data } = await supabase
@@ -43,7 +47,9 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
       // found a match!
       if (data) {
         setSubmit(true);
+        setConfirm(false);
       }
+      setLoading(false);
     };
 
     checkButton();
@@ -84,29 +90,80 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
     <div className="flex items-center justify-center p-6">
       {/* --- NEW MODAL CODE START --- */}
       {confirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="bg-white p-8 rounded-3xl max-w-sm w-full shadow-2xl text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Are you sure?
-            </h2>
-            <p className="text-gray-600 mb-8">
-              You are about to volunteer for {selectedOpp.task} // Note this
-              cannot be undone
-            </p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div
+            onClick={() => setConfirm(false)}
+            className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+          />
 
-            <div className="flex gap-4">
-              <button
-                onClick={() => setConfirm(false)} // Close if they change their mind
-                className="flex-1 py-3 font-bold bg-[#125C9B] rounded-xl text-white hover:text-gray-600"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleVolunteer} // Actually call the Supabase function
-                className="flex-1 py-3 bg-[#125C9B] text-white font-bold rounded-xl"
-              >
-                Yes, Confirm
-              </button>
+          {/* Modal Container */}
+          <div className="relative z-10 w-full max-w-lg bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="p-8">
+              <div className="space-y-6">
+                {/* Header */}
+                <div className="flex items-center gap-3 text-amber-600">
+                  <HiOutlineExclamationTriangle className="text-2xl" />
+                  <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+                    Commitment Confirmation
+                  </h2>
+                </div>
+
+                {/* Professional Notice */}
+                <div className="bg-slate-50 border-l-4 border-slate-400 p-5 rounded-r-lg">
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    This platform functions exclusively as a{" "}
+                    <span className="font-semibold text-slate-900">
+                      scheduling mediator
+                    </span>
+                    . By confirming, you acknowledge that your registration
+                    constitutes a formal commitment to:
+                  </p>
+                  <ul className="mt-4 space-y-3 text-sm font-medium text-slate-800">
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />
+                      <span>
+                        Report physically to {selectedOpp.teacher}’s designated
+                        classroom.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />
+                      <span>
+                        Execute the assigned task in-person at{" "}
+                        {selectedOpp.location}.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Legal/Expectation Footnote */}
+                <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                  Post-Confirmation Protocol
+                </p>
+                <p className="text-xs text-slate-500 leading-normal bg-blue-50/50 p-3 rounded-md border border-blue-100">
+                  Registration cannot be cancelled through this interface.
+                  Should unforeseen circumstances arise preventing your
+                  attendance, it is your responsibility to notify the instructor
+                  directly.
+                </p>
+
+                {/* Action Footer */}
+                <div className="flex items-center justify-end gap-4 pt-2">
+                  <button
+                    onClick={() => setConfirm(false)}
+                    className=" cursor-pointer  text-sm font-bold text-slate-500 hover:text-slate-800 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleVolunteer}
+                    className=" cursor-pointer  px-8 py-3 bg-[#125C9B] text-white text-sm font-black rounded-lg hover:bg-[#0a4a7c] active:scale-95 transition-all  shadow-blue-900/20"
+                  >
+                    Confirm Participation
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -182,18 +239,36 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
             {selectedOpp.description}
           </p>
         </section>
-
-        <button
-          onClick={() => setConfirm(true)}
-          disabled={isSubmit}
-          className={`px-12 py-4 font-black rounded-2xl transition-all shadow-xl ${
-            isSubmit
-              ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 cursor-not-allowed"
-              : "bg-white text-[#125C9B] hover:bg-blue-50 active:scale-95 cursor-pointer"
-          }`}
-        >
-          {isSubmit ? "Volunteered" : "Volunteer Now"}
-        </button>
+        <div className="h-13 flex items-center">
+          {loading ? (
+            <div className="h-full w-40 bg-white/5 animate-pulse rounded-lg border border-white/10" />
+          ) : (
+            <button
+              onClick={() => setConfirm(true)}
+              disabled={isSubmit || spotsLeft <= 0}
+              className={`h-full px-10 text-sm font-bold tracking-tight rounded-lg transition-all border ${
+                isSubmit
+                  ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400 cursor-not-allowed"
+                  : spotsLeft <= 0
+                    ? "bg-transparent border-white/10 text-white/30 cursor-not-allowed"
+                    : "bg-white text-[#125C9B] border-white hover:bg-slate-100 active:scale-[0.98] cursor-pointer rounded-lg"
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                {isSubmit ? (
+                  <>
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Registration Confirmed</span>
+                  </>
+                ) : spotsLeft <= 0 ? (
+                  "Capacity reached"
+                ) : (
+                  "Volunteer"
+                )}
+              </div>
+            </button>
+          )}
+        </div>
       </motion.div>
     </div>
   );

@@ -23,6 +23,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isSubmit, setSubmit] = useState(false);
+  const [confirm, setConfirm] = useState(false);
 
   const selectedOpp = oppor.find((item) => item.id === Number(id));
 
@@ -31,7 +32,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
       // 1. If there's no user or the opportunity hasn't loaded, stop.
       if (!user || !selectedOpp) return;
 
-      // 2. Ask Supabase: "Does a signup exist for this student + this opp?"
+      // 2. Ask Supabase: Does a signup exist for this student + this opp?
       const { data } = await supabase
         .from("signups")
         .select("id")
@@ -39,14 +40,14 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
         .eq("student_id", user.id)
         .maybeSingle();
 
-      // 3. If data exists, it means we found a match!
+      // found a match!
       if (data) {
         setSubmit(true);
       }
     };
 
     checkButton();
-  }, [user, selectedOpp.id, selectedOpp]);
+  }, [user, selectedOpp]);
 
   if (dataLoading) {
     return <LoadingCard />;
@@ -61,6 +62,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
   const spotsLeft = selectedOpp.max_spots - spotTaken;
 
   const handleVolunteer = async () => {
+    setConfirm(false);
     if (!user) {
       toast.error("Please Sign Up First");
       return;
@@ -75,10 +77,41 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
     }
 
     toast.success("Successfuly Volunteered");
+    setSubmit(true);
   };
 
   return (
     <div className="flex items-center justify-center p-6">
+      {/* --- NEW MODAL CODE START --- */}
+      {confirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white p-8 rounded-3xl max-w-sm w-full shadow-2xl text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Are you sure?
+            </h2>
+            <p className="text-gray-600 mb-8">
+              You are about to volunteer for {selectedOpp.task} // Note this
+              cannot be undone
+            </p>
+
+            <div className="flex gap-4">
+              <button
+                onClick={() => setConfirm(false)} // Close if they change their mind
+                className="flex-1 py-3 font-bold bg-[#125C9B] rounded-xl text-white hover:text-gray-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleVolunteer} // Actually call the Supabase function
+                className="flex-1 py-3 bg-[#125C9B] text-white font-bold rounded-xl"
+              >
+                Yes, Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* --- NEW MODAL CODE END --- */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -151,7 +184,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
         </section>
 
         <button
-          onClick={handleVolunteer}
+          onClick={() => setConfirm(true)}
           disabled={isSubmit}
           className={`px-12 py-4 font-black rounded-2xl transition-all shadow-xl ${
             isSubmit
@@ -159,7 +192,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
               : "bg-white text-[#125C9B] hover:bg-blue-50 active:scale-95 cursor-pointer"
           }`}
         >
-          {isSubmit ? "✓ Successfully Volunteered" : "Volunteer Now"}
+          {isSubmit ? "Volunteered" : "Volunteer Now"}
         </button>
       </motion.div>
     </div>

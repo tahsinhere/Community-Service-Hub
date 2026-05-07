@@ -38,7 +38,7 @@ const TeacherDashboard = ({ user }) => {
     loadDashboardData();
 
     // 4. Critical: Only run this when the user ID changes
-  }, [user, user.id]);
+  }, [user]);
 
   return (
     <div className="max-w-6xl mx-auto p-40">
@@ -48,8 +48,9 @@ const TeacherDashboard = ({ user }) => {
           <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
             Dashboard
           </h1>
-          <p className="text-slate-500 font-medium mt-1">
-            Manage your {myOpps.length} active opportunities
+          <p className="text-green-300 font-medium mt-1">
+            View the amount of sign ups for your {myOpps.length} active
+            opportunities
           </p>
         </div>
 
@@ -76,16 +77,16 @@ const TeacherDashboard = ({ user }) => {
               className="bg-[#125C9B] border border-be-blue-900 rounded-3xl overflow-hidden shadow-sm flex flex-col"
             >
               {/* Card Header */}
-              <div className="p-6 bg-slate-50/50 border-b border-slate-100">
+              <div className="p-6  border-b border-slate-100">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-black text-slate-900 leading-tight">
+                  <h3 className="text-xl font-black text-white/80 leading-tight">
                     {opp.task}
                   </h3>
                   <span className="bg-blue-100 text-[#125C9B] px-3 py-1 rounded-full text-[10px] font-black uppercase">
                     {opp.signups?.length || 0} / {opp.max_spots} Filled
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">
+                <p className="text-xs text-white/80 font-bold uppercase tracking-widest">
                   {opp.time} • {opp.location}
                 </p>
               </div>
@@ -93,7 +94,7 @@ const TeacherDashboard = ({ user }) => {
               {/* Roster Section */}
               <div className="p-6 flex-1">
                 <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                  <LuUsers size={14} /> Verified Roster
+                  <LuUsers size={14} /> Students Volunteering
                 </h4>
 
                 <div className="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">

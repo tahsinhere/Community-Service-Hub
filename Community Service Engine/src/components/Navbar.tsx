@@ -82,7 +82,7 @@ const Navbar = ({ teacher, onLogout, user }) => {
               className="cursor-pointer px-4 py-1.5 bg-white text-black font-bold rounded-xl hover:bg-gray-300 transition-all shadow-lg shadow-white/5 flex items-center gap-2"
             >
               <LuUserPlus className="text-lg" />
-              Sign Up
+              Teacher
             </button>
           )}
         </div>

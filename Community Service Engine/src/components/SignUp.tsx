@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
 const SignUp = ({ onLogin }) => {
+  const [email, setEmail] = useState("");
+
   return (
     <div className="flex items-center justify-center py-32 px-4 selection:bg-white/30">
       <motion.div
@@ -26,45 +29,36 @@ const SignUp = ({ onLogin }) => {
         {/* Email/Pass Placeholders */}
         <div className="space-y-3 mb-6">
           <div className="w-full py-4 px-6 bg-white/10 border border-white/10 rounded-2xl flex justify-between items-center">
-            <span className="text-blue-100/80 text-sm font-semibold tracking-tight">
-              Email address
-            </span>
-            <span className="text-[10px] text-white/20 font-bold tracking-widest">
-              SOON
-            </span>
+            <input
+              className="text-blue-100/80 text-sm font-semibold tracking-tight"
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="w-full py-4 px-6 bg-white/10 border border-white/10 rounded-2xl flex justify-between items-center">
-            <span className="text-blue-100/80 text-sm font-semibold tracking-tight">
-              Password
-            </span>
-            <span className="text-[10px] text-white/20 font-bold tracking-widest">
-              SOON
-            </span>
+            <input
+              className="text-blue-100/80 text-sm font-semibold tracking-tight"
+              placeholder="Password"
+              type="password"
+            />
           </div>
-          <button className="w-full py-4 bg-white/5 text-white/30 font-bold rounded-2xl border border-white/5 cursor-not-allowed uppercase tracking-widest text-[11px]">
-            Sign In
+          <button className="w-full py-4 bg-white/5 text-white/30  font-bold rounded-2xl border border-white/5 cursor-pointer hover:bg-white/20 uppercase tracking-widest text-[11px]">
+            {" "}
+            Login in
           </button>
         </div>
 
         <div className="flex items-center gap-4 mb-6">
           <div className="h-px flex-1 bg-white/10"></div>
           <span className="text-white/40 text-[10px] font-bold tracking-widest">
-            OR
+            Admin
           </span>
           <div className="h-px flex-1 bg-white/10"></div>
         </div>
 
-        {/* Google Login Button */}
-        <button
-          onClick={onLogin}
-          className="w-full py-4 bg-white text-[#125C9B] font-bold rounded-2xl flex items-center justify-center gap-3 hover:bg-gray-200 transition-transform cursor-pointer shadow-xl"
-        >
-          <FcGoogle className="text-2xl" />
-          <span className="text-sm tracking-tight">Continue with Google</span>
-        </button>
-
         <p className="text-center mt-8 text-white/30 text-[10px] font-medium uppercase tracking-[0.2em]">
-          Official Student & Faculty Login Only
+          Faculty Login Only
         </p>
       </motion.div>
     </div>

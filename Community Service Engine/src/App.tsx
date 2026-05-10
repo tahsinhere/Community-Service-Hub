@@ -88,11 +88,15 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleLogin = async () => {
-    await supabase.auth.signInWithPassword({
+  const handleLogin = async (email?: string, password?: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
+
+    if (error) {
+      console.log("Login Failed:", error.message);
+    }
   };
 
   const handleLogout = async () => {

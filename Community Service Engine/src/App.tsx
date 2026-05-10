@@ -12,7 +12,7 @@ import SecretCode from "./components/teacherComponents/SecretCode";
 import TeacherDashboard from "./components/teacherComponents/TeacherDashboard";
 import TeacherAccess from "./components/teacherComponents/TeacherAccess";
 import NoOppor from "./components/NoOppor";
-import { Toaster } from "sonner";
+import { toast, Toaster } from "sonner";
 
 interface SingleObject {
   id: number;
@@ -76,7 +76,7 @@ function App() {
       setUser(startUser);
       checkUserRole(startUser);
     });
-    //prettier-ignore   // this is active monitoring for the active user already with a user and role
+    //prettier-ignore   // this is ac tive monitoring for the active user already with a user and role
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
@@ -89,13 +89,14 @@ function App() {
   }, []);
 
   const handleLogin = async (email?: string, password?: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
 
     if (error) {
       console.log("Login Failed:", error.message);
+      toast.error("Incorrect Email or Password");
     }
   };
 

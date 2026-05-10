@@ -51,17 +51,6 @@ const Navbar = ({ teacher, onLogout, user }) => {
             </Link>
           )}
 
-          {/* 2. Teacher Access Button (For anyone not yet verified) */}
-          {!teacher && (
-            <button
-              onClick={handleTeacherAccessClick}
-              className="flex items-center gap-2 text-gray-400 hover:text-white font-bold transition-colors cursor-pointer text-[12px] tracking-[0.2em]"
-            >
-              <LuLock className="text-[15px]" />
-              Teacher Access
-            </button>
-          )}
-
           <button className="flex items-center gap-2 text-gray-400 hover:text-white font-bold transition-colors cursor-pointer text-[12px] tracking-[0.2em]">
             <LuBookOpen className="text-[15px]" />
             User Guide

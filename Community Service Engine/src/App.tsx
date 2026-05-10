@@ -89,11 +89,9 @@ function App() {
   }, []);
 
   const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin,
-      },
+    await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
     });
   };
 

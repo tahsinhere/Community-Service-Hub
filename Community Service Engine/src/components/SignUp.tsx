@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 
 const SignUp = ({ onLogin }) => {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <div className="flex items-center justify-center py-32 px-4 selection:bg-white/30">
@@ -41,6 +41,8 @@ const SignUp = ({ onLogin }) => {
               className="text-blue-100/80 text-sm font-semibold tracking-tight"
               placeholder="Password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button className="w-full py-4 bg-white/5 text-white/30  font-bold rounded-2xl border border-white/5 cursor-pointer hover:bg-white/20 uppercase tracking-widest text-[11px]">

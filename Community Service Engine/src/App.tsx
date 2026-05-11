@@ -98,6 +98,10 @@ function App() {
       console.log("Login Failed:", error.message);
       toast.error("Incorrect Email or Password");
     }
+
+    if (!error) {
+      navigate("/TeacherDashboard");
+    }
   };
 
   const handleLogout = async () => {

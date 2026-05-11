@@ -29,6 +29,7 @@ const SecretCode = ({ setTeacher }) => {
       setWrong(true);
     } else {
       setTeacher(true);
+      setWrong(false);
       navigate("/TeacherDashboard");
     }
   };

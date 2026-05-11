@@ -64,8 +64,8 @@ const TeacherDashboard = ({ user }) => {
       {/* --- CARDS GRID --- */}
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="h-64 bg-white/5 animate-pulse rounded-[2rem]" />
-          <div className="h-64 bg-white/5 animate-pulse rounded-[2rem]" />
+          <div className="h-64 bg-white/5 animate-pulse rounded-4xl" />
+          <div className="h-64 bg-white/5 animate-pulse rounded-4xl" />
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">

@@ -100,6 +100,7 @@ function App() {
     }
 
     if (!error) {
+      setTeacher(true);
       navigate("/TeacherDashboard");
     }
   };

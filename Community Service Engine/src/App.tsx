@@ -101,6 +101,7 @@ function App() {
 
     if (!error) {
       setTeacher(true);
+      toast.success("Successfully Gained Access");
       navigate("/TeacherDashboard");
     }
   };

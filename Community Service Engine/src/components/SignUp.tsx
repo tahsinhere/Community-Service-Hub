@@ -5,13 +5,15 @@ const SignUp = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     onLogin(email, password);
   };
 
   return (
     <div className="flex items-center justify-center py-32 px-4 selection:bg-white/30">
-      <motion.div
+      <motion.form
+        onSubmit={handleSubmit}
         initial={{ opacity: 1, y: 20 }}
         whileInView={{ opacity: 1, y: 2 }}
         viewport={{ once: true }}
@@ -34,7 +36,8 @@ const SignUp = ({ onLogin }) => {
         <div className="space-y-3 mb-6">
           <div className="w-full py-4 px-6 bg-white/10 border border-white/10 rounded-2xl flex justify-between items-center">
             <input
-              className=" focus-within:border-white/30    w-full  text-blue-100/80 text-sm font-semibold tracking-tight bg-transparent border-transparent outline-none "
+              type="email"
+              className=" focus-within:border-white/30  autofill:shadow-[inset_0_0_0px_1000px_#125C9B] autofill:text-black  w-full  text-blue-100/80 text-sm font-semibold tracking-tight bg-transparent border-transparent outline-none "
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -42,7 +45,7 @@ const SignUp = ({ onLogin }) => {
           </div>
           <div className="  w-full py-4 px-6 bg-white/10 border border-white/10 rounded-2xl flex justify-between items-center">
             <input
-              className="w-full focus-within:border-white/80 text-blue-100/80 text-sm font-semibold tracking-tigh bg-transparent border-transparent outline-none"
+              className="autofill:shadow-[inset_0_0_0px_1000px_#125C9B] autofill:text-white       w-full focus-within:border-white/80 text-blue-100/80 text-sm font-semibold tracking-tigh bg-transparent border-transparent outline-none"
               placeholder="Password"
               type="password"
               value={password}
@@ -50,8 +53,8 @@ const SignUp = ({ onLogin }) => {
             />
           </div>
           <button
-            onClick={handleSubmit}
-            className="  active:scale-98  w-full py-4 bg-white/5 text-white/30  font-bold rounded-2xl border border-white/5 cursor-pointer hover:bg-white/20 uppercase tracking-widest text-[11px]"
+            type="submit"
+            className="  active:scale-98  w-full py-4 bg-white/10 text-white/80  font-bold rounded-2xl border border-white/5 cursor-pointer hover:bg-white/20 uppercase tracking-widest text-[11px]"
           >
             {" "}
             Login in
@@ -69,7 +72,7 @@ const SignUp = ({ onLogin }) => {
         <p className="text-center mt-8 text-white/30 text-[10px] font-medium uppercase tracking-[0.2em]">
           Faculty Login Only
         </p>
-      </motion.div>
+      </motion.form>
     </div>
   );
 };

@@ -41,94 +41,92 @@ const TeacherDashboard = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="max-w-6xl mx-auto p-40">
-      {/* --- HEADER & CREATE TRIGGER --- */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 border-b border-slate-200 pb-8">
+    <div className="max-w-6xl mx-auto p-40 selection:bg-white/20">
+      {/* --- HEADER --- */}
+      <div className="flex flex-col md:flex-row justify-between items-end gap-4 mb-12 border-b border-white/10 pb-10">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
+          <h1 className="text-4xl font-black text-white tracking-tighter uppercase ">
             Dashboard
           </h1>
-          <p className="text-green-300 font-medium mt-1">
-            View the amount of sign ups for your {myOpps.length} active
-            opportunities
+          <p className="text-blue-200/50 text-sm font-medium mt-2">
+            Managing {myOpps.length} active opportunities
           </p>
         </div>
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="cursor-pointer bg-[#125C9B] hover:bg-[#0a4a7c] text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-lg shadow-blue-900/20"
+          className="cursor-pointer bg-white text-[#125C9B] px-8 py-3 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-white/80 transition-all shadow-xl active:scale-95"
         >
-          <LuPlus size={20} />
-          Create New
+          + Create New
         </button>
       </div>
 
       {/* --- CARDS GRID --- */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="h-48 bg-slate-100 animate-pulse rounded-2xl" />
-          <div className="h-48 bg-slate-100 animate-pulse rounded-2xl" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="h-64 bg-white/5 animate-pulse rounded-[2rem]" />
+          <div className="h-64 bg-white/5 animate-pulse rounded-[2rem]" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {myOpps.map((opp) => (
             <div
               key={opp.id}
-              className="bg-[#125C9B] border border-be-blue-900 rounded-3xl overflow-hidden shadow-sm flex flex-col"
+              className="bg-[#125C9B] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col transition-transform hover:translate-y-[-4px]"
             >
               {/* Card Header */}
-              <div className="p-6  border-b border-slate-100">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-black text-white/80 leading-tight">
+              <div className="p-8 border-b border-white/5">
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-2xl font-black text-white leading-none tracking-tight">
                     {opp.task}
                   </h3>
-                  <span className="bg-blue-100 text-[#125C9B] px-3 py-1 rounded-full text-[10px] font-black uppercase">
-                    {opp.signups?.length || 0} / {opp.max_spots} Filled
+                  <span className="bg-white/10 text-white border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">
+                    {opp.signups?.length || 0} / {opp.max_spots}
                   </span>
                 </div>
-                <p className="text-xs text-white/80 font-bold uppercase tracking-widest">
+                <p className="text-[10px] text-white/40 font-bold uppercase tracking-[0.2em]">
                   {opp.time} • {opp.location}
                 </p>
               </div>
 
               {/* Roster Section */}
-              <div className="p-6 flex-1">
-                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                  <LuUsers size={14} /> Students Volunteering
+              <div className="p-8 flex-1 bg-white/5">
+                <h4 className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                  <LuUsers size={14} /> Registered Students
                 </h4>
 
-                <div className="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                <div className="space-y-3">
                   {opp.signups && opp.signups.length > 0 ? (
                     opp.signups.map((s) => (
                       <div
                         key={s.id}
-                        className="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-xl hover:border-blue-200 transition-colors group"
+                        className="flex items-center justify-between group"
                       >
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-blue-50 text-[#125C9B] rounded-full flex items-center justify-center font-bold text-xs">
-                            {s.profiles?.full_name?.charAt(0) || "S"}
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-white/10 border border-white/10 text-white rounded-full flex items-center justify-center font-bold text-xs">
+                            {s.profiles?.full_name?.charAt(0)}
                           </div>
                           <div>
-                            <p className="text-sm font-bold text-slate-800 leading-none">
+                            <p className="text-sm font-bold text-white leading-none">
                               {s.profiles?.full_name}
                             </p>
-                            <p className="text-[10px] text-slate-400 mt-1">
+                            <p className="text-[10px] text-white/30 mt-1 uppercase tracking-widest font-medium">
                               {s.profiles?.email}
                             </p>
                           </div>
                         </div>
                         <a
                           href={`mailto:${s.profiles?.email}`}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-[#125C9B]"
+                          className="text-white/20 hover:text-white transition-colors p-2"
                         >
                           <LuMail size={16} />
                         </a>
                       </div>
                     ))
                   ) : (
-                    <div className="text-center py-8 border-2 border-dashed border-slate-100 rounded-2xl">
-                      <p className="text-xs text-slate-400 italic">
-                        No student registrations yet.
+                    <div className="text-center py-6 border border-dashed border-white/10 rounded-2xl">
+                      <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">
+                        Empty Roster
                       </p>
                     </div>
                   )}

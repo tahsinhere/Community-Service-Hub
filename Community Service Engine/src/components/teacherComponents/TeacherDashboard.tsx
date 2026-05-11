@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../backend/supabase";
 import CreateOppor from "./CreateOppor";
-import { LuPlus, LuUsers, LuMail } from "react-icons/lu";
+import { LuUsers, LuMail } from "react-icons/lu";
 
 const TeacherDashboard = ({ user }) => {
   const [myOpps, setMyOpps] = useState([]);

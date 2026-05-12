@@ -8,6 +8,9 @@ import { useEffect, useState } from "react";
 
 import OpportunityModal from "./OpportunityModal";
 import OpportunityHeader from "./OpportunityHeader";
+import TokenDisplay from "./TokenDisplay";
+import TheDetails from "./TheDetails";
+import VolunteerButton from "./VolunteerButton";
 
 interface SingleObject {
   oppor: {
@@ -45,16 +48,17 @@ const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
       const { data, error } = await supabase
         .from("tokens")
         .select("is_claimed")
-        .eq("opportunity_id", selectedOpp.id);
+        .eq("opportunity_id", selectedOpp.id)
+        .eq("is_claimed", false);
 
       if (error) {
-        toast.error("Error has occured...");
+        toast.error("Error has occurred...");
         console.log(error);
-      }
-      if (data) {
+      } else if (data) {
         setTokenCount(data);
       }
     };
+
     fetchTokens();
   }, [selectedOpp]);
 
@@ -86,10 +90,7 @@ const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
     return <CannotFind id={id} />;
   }
 
-  const tokenAmountLeft = tokenCount.filter(
-    (tokenValue) => tokenValue.is_claimed === false,
-  );
-  const spotsLeft = tokenAmountLeft.length;
+  const spotsLeft = tokenCount.length;
 
   const handleVolunteer = async () => {
     setConfirm(false);
@@ -105,12 +106,12 @@ const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
       setLoading(false);
       toast.error("Sorry, this event is full");
     }
-    setToken(data);
+    setTokenCode(data);
     localStorage.setItem(`token-${selectedOpp.id}`, data);
     toast.success("Successfuly Volunteered");
 
     setTimeout(() => {
-      // window.location.reload();
+      window.location.reload();
     }, 500);
     setSubmit(true);
   };
@@ -142,78 +143,18 @@ const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
         className="relative max-w-4xl w-full bg-[#125C9B] border border-white/20 p-8 md:p-16 rounded-3xl shadow-2xl"
       >
         <OpportunityHeader navigate={navigate} selectedOpp={selectedOpp} />
+        <TheDetails spotsLeft={spotsLeft} selectedOpp={selectedOpp} />
+        {isSubmit && tokenCode && <TokenDisplay tokenCode={tokenCode} />}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-white/20 mb-8">
-          <div>
-            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
-              Location
-            </p>
-            <p className="text-white text-lg font-semibold">
-              {selectedOpp.location}
-            </p>
-          </div>
-          <div>
-            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
-              Time
-            </p>
-            <p className="text-white text-lg font-semibold">
-              {selectedOpp.time}
-            </p>
-          </div>
-          <div>
-            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
-              Credit
-            </p>
-            <p className="text-white text-lg font-semibold">
-              {selectedOpp.hours}h Offered
-            </p>
-          </div>
-          <div>
-            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
-              Spots
-            </p>
-            <p
-              className={`text-lg font-bold ${spotsLeft < 5 ? "text-amber-300" : "text-emerald-300"}`}
-            >
-              {spotsLeft} Left
-            </p>
-          </div>
-        </div>
-
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
-          <p className="text-xl text-blue-50/80 leading-relaxed">
-            {selectedOpp.description}
-          </p>
-        </section>
         <div className="h-13 flex items-center">
           {loading ? (
             <div className="h-full w-40 bg-white/5 animate-pulse rounded-lg border border-white/10" />
           ) : (
-            <button
-              onClick={() => setConfirm(true)}
-              disabled={isSubmit || spotsLeft <= 0}
-              className={`h-full px-10 text-sm font-bold tracking-tight rounded-lg transition-all border ${
-                isSubmit
-                  ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400 cursor-not-allowed"
-                  : spotsLeft <= 0
-                    ? "bg-transparent border-white/10 text-white/30 cursor-not-allowed"
-                    : "bg-white text-[#125C9B] border-white hover:bg-slate-100 active:scale-[0.98] cursor-pointer rounded-lg"
-              }`}
-            >
-              <div className="flex items-center gap-2.5">
-                {isSubmit ? (
-                  <>
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>Registration Confirmed</span>
-                  </>
-                ) : spotsLeft <= 0 ? (
-                  "Capacity reached"
-                ) : (
-                  "Volunteer"
-                )}
-              </div>
-            </button>
+            <VolunteerButton
+              isSubmit={isSubmit}
+              spotsLeft={spotsLeft}
+              setConfirm={setConfirm}
+            />
           )}
         </div>
       </motion.div>

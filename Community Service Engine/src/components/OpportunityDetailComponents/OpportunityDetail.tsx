@@ -19,6 +19,7 @@ interface SingleObject {
     hours: number;
     max_spots: number;
     description: string;
+    tokens?: { is_claimed: boolean }[];
   };
   dataLoading: boolean;
   user: any;
@@ -30,9 +31,33 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
   const [isSubmit, setSubmit] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState<string | null>(null);
+  const [tokens, setToken] = useState<string | null>(null);
+
+  const [tokenCount, setTokenCount] = useState<{ is_claimed: boolean }[]>([]);
 
   const selectedOpp = oppor.find((item) => item.id === Number(id));
+
+  useEffect(() => {
+    const fetchTokens = async () => {
+      if (!selectedOpp) {
+        setLoading(false);
+        return;
+      }
+      const { data, error } = await supabase
+        .from("tokens")
+        .select("is_claimed")
+        .eq("opportunity_id", selectedOpp.id);
+
+      if (error) {
+        toast.error("Error has occured...");
+        console.log(error);
+      }
+      if (data) {
+        setTokenCount(data);
+      }
+      fetchTokens();
+    };
+  }, [selectedOpp]);
 
   useEffect(() => {
     const checkLocalStorage = async () => {
@@ -45,8 +70,10 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
 
       if (localStorageToken) {
         setToken(localStorageToken);
-        setLoading(false);
+        setSubmit(true);
       }
+
+      setLoading(false);
     };
 
     checkLocalStorage();
@@ -60,15 +87,17 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
     return <CannotFind id={id} />;
   }
 
-  const spotTaken = selectedOpp.signups?.[0]?.count || 0;
-  const spotsLeft = selectedOpp.max_spots - spotTaken;
+  const tokenAmountLeft = tokenCount.filter(
+    (tokenValue) => tokenValue.is_claimed === false,
+  );
+  const spotsLeft = selectedOpp.max_spots - tokenAmountLeft;
 
   const handleVolunteer = async () => {
     setConfirm(false);
     //prettier-ignore
     const {data, error } = await supabase.rpc("claim_token", {target_opportunity_id:selectedOpp.id});
 
-    if (error) {
+    if (error || !data) {
       console.log("Error details:", error);
       toast.error("Registration failed. Please try again.");
     }
@@ -96,7 +125,16 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
           selectedOpp={selectedOpp}
         />
       )}
-
+      <button
+        onClick={() => {
+          localStorage.removeItem(`token-${selectedOpp.id}`);
+          window.location.reload();
+        }}
+        className="text-xs text-red-400 underline mt-4"
+      >
+        Debug: Reset Registration
+      </button>
+      ;
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

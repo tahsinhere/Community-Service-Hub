@@ -73,9 +73,22 @@ const OpportunityCard = ({ oneObject }: SingleObject) => {
         {/* Spots Badge */}
         <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/10">
           <span
-            className={`text-xs font-bold ${spotsLeft < 5 ? "text-amber-300" : "text-emerald-300"}`}
+            className={`text-xs font-bold ${
+              spots === null
+                ? "text-white/40"
+                : spots === 0
+                  ? "text-red-400"
+                  : spots < 5
+                    ? "text-amber-300"
+                    : "text-emerald-300"
+            }`}
           >
-            ● {spotsLeft} {spotsLeft === 1 ? "Seat Remains" : "Seats Remain"}
+            ●{" "}
+            {spots === null
+              ? "Loading..."
+              : spots === 0
+                ? "Full Capacity"
+                : `${spots} ${spots === 1 ? "Seat Remains" : "Seats Remain"}`}
           </span>
         </div>
       </div>

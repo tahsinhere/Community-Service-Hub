@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { LuChevronRight } from "react-icons/lu";
 
 const SignUp = ({ onLogin }) => {
   const [email, setEmail] = useState("");
@@ -52,12 +53,17 @@ const SignUp = ({ onLogin }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
           <button
             type="submit"
-            className="  active:scale-98  w-full py-4 bg-white/10 text-white/80  font-bold rounded-2xl border border-white/5 cursor-pointer hover:bg-white/20 uppercase tracking-widest text-[11px]"
+            className="group cursor-pointer px-24 py-3.5 bg-white/5 border border-white/20 text-white font-bold rounded-xl 
+                            hover:text-white/40 flex items-center justify-center mx-auto 
+                           transition-all duration-300 ease-out active:scale-95 "
           >
-            {" "}
-            Login in
+            <span className="text-sm uppercase tracking-tighter ">
+              Login Required
+            </span>
+            <LuChevronRight className="ml-2 text-xl opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
           </button>
         </div>
 

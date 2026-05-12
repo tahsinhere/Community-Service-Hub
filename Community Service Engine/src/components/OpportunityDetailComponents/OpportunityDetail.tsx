@@ -41,7 +41,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
         return;
       }
 
-      const localStorageToken = localStorage.getItem(`token_${selectedOpp.id}`);
+      const localStorageToken = localStorage.getItem(`token-${selectedOpp.id}`);
 
       if (localStorageToken) {
         setToken(localStorageToken);
@@ -50,7 +50,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
     };
 
     checkLocalStorage();
-  }, [user, selectedOpp]);
+  }, [selectedOpp]);
 
   if (dataLoading) {
     return <LoadingCard />;
@@ -74,6 +74,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
     }
 
     if (data === "FULL") {
+      setLoading(false);
       toast.error("Sorry, this event is full");
     }
     setToken(data);

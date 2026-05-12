@@ -177,8 +177,11 @@ function App() {
             path="/secretCode"
             element={<SecretCode setTeacher={setTeacher} user={user} />}
           />
-          {/* add conditional route logic to this later */}
-          <Route path="/TeacherAccess" element={<TeacherAccess />} />
+
+          <Route
+            path="/TeacherAccess"
+            element={teacher ? <TeacherAccess /> : <Navigate to="/" />}
+          />
 
           <Route
             path="/TeacherDashboard"

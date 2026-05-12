@@ -22,16 +22,15 @@ interface SingleObject {
     tokens?: { is_claimed: boolean }[];
   };
   dataLoading: boolean;
-  user: any;
 }
 
-const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
+const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isSubmit, setSubmit] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [tokens, setToken] = useState<string | null>(null);
+  const [tokenCode, setTokenCode] = useState<string | null>(null);
 
   const [tokenCount, setTokenCount] = useState<{ is_claimed: boolean }[]>([]);
 
@@ -55,8 +54,8 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
       if (data) {
         setTokenCount(data);
       }
-      fetchTokens();
     };
+    fetchTokens();
   }, [selectedOpp]);
 
   useEffect(() => {
@@ -69,7 +68,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
       const localStorageToken = localStorage.getItem(`token-${selectedOpp.id}`);
 
       if (localStorageToken) {
-        setToken(localStorageToken);
+        setTokenCode(localStorageToken);
         setSubmit(true);
       }
 
@@ -90,7 +89,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
   const tokenAmountLeft = tokenCount.filter(
     (tokenValue) => tokenValue.is_claimed === false,
   );
-  const spotsLeft = selectedOpp.max_spots - tokenAmountLeft;
+  const spotsLeft = tokenAmountLeft.length;
 
   const handleVolunteer = async () => {
     setConfirm(false);

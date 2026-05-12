@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { supabase } from "../backend/supabase";
 
 interface SingleObject {
   oneObject: {
@@ -16,10 +18,26 @@ interface SingleObject {
 }
 
 const OpportunityCard = ({ oneObject }: SingleObject) => {
+  const [spots, setSpotsLeft] = useState<number | null>(null);
   const navigate = useNavigate();
 
-  const spotTaken = oneObject.signups?.[0]?.count || 0;
-  const spotsLeft = oneObject.max_spots - spotTaken;
+  useEffect(() => {
+    const fetchTokens = async () => {
+      const { count, error } = await supabase
+        .from("tokens")
+        .select("*", { count: "exact", head: true })
+        .eq("opportunity_id", oneObject.id)
+        .eq("is_claimed", false);
+
+      if (!error) {
+        setSpotsLeft(count);
+      }
+    };
+
+    fetchTokens();
+  }, [oneObject.id]);
+
+  const spotsLeft = spots;
 
   return (
     <motion.div

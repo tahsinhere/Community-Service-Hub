@@ -106,10 +106,12 @@ const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
       setLoading(false);
       toast.error("Sorry, this event is full");
     }
-    setTokenCode(data);
-    localStorage.setItem(`token-${selectedOpp.id}`, data);
-    toast.success("Successfuly Volunteered");
 
+    if (data) {
+      setTokenCode(data);
+      localStorage.setItem(`token-${selectedOpp.id}`, data);
+      toast.success("Successfuly Volunteered");
+    }
     setTimeout(() => {
       window.location.reload();
     }, 500);

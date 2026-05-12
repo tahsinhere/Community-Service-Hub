@@ -9,10 +9,8 @@ const TeacherDashboard = ({ user }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Create an async function inside the effect
     const loadDashboardData = async () => {
       if (!user) {
-        // Only set loading to false if we actually need to stop the spinner
         setLoading(false);
         return;
       }
@@ -20,24 +18,20 @@ const TeacherDashboard = ({ user }) => {
       try {
         const { data, error } = await supabase
           .from("opportunities")
-          .select(`*, signups(*, profiles(*))`)
+          .select(`*`, tokens(id, token_code, is_claimed))
           .eq("teacher_id", user.id);
 
         if (error) throw error;
 
-        // 2. ONLY update state once the external data is back
         setMyOpps(data || []);
       } catch (err) {
         console.error(err);
       } finally {
-        // 3. This is the only place setLoading should be called
         setLoading(false);
       }
     };
 
     loadDashboardData();
-
-    // 4. Critical: Only run this when the user ID changes
   }, [user]);
 
   return (

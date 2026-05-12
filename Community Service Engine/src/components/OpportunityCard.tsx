@@ -37,8 +37,6 @@ const OpportunityCard = ({ oneObject }: SingleObject) => {
     fetchTokens();
   }, [oneObject.id]);
 
-  const spotsLeft = spots;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

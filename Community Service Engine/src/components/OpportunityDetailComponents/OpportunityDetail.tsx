@@ -31,12 +31,12 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
   const [confirm, setConfirm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
+
   const selectedOpp = oppor.find((item) => item.id === Number(id));
 
   useEffect(() => {
-    const checkButton = async () => {
-      // 1. If there's no user or the opportunity hasn't loaded, stop.
-      if (!user || !selectedOpp) {
+    const checkLocalStorage = async () => {
+      if (!selectedOpp) {
         setLoading(false);
         return;
       }
@@ -57,7 +57,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
       setLoading(false);
     };
 
-    checkButton();
+    checkLocalStorage();
   }, [user, selectedOpp]);
 
   if (dataLoading) {
@@ -85,7 +85,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
       toast.error("Sorry, this event is full");
     }
     setToken(data);
-    localStorage.setItem(`The token ${selectedOpp.id}`, data);
+    localStorage.setItem(`token-${selectedOpp.id}`, data);
     toast.success("Successfuly Volunteered");
 
     setTimeout(() => {

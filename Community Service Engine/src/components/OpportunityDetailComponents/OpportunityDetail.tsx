@@ -7,6 +7,7 @@ import LoadingCard from "../LoadingCard";
 import { useEffect, useState } from "react";
 
 import OpportunityModal from "./OpportunityModal";
+import OpportunityHeader from "./OpportunityHeader";
 
 interface SingleObject {
   oppor: {
@@ -88,7 +89,7 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
     toast.success("Successfuly Volunteered");
 
     setTimeout(() => {
-      window.location.reload();
+      // window.location.reload();
     }, 500);
     setSubmit(true);
   };
@@ -110,69 +111,8 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className="relative max-w-4xl w-full bg-[#125C9B] border border-white/20 p-8 md:p-16 rounded-3xl shadow-2xl"
       >
-        <button
-          onClick={() => navigate("/")}
-          className="absolute top-6 left-8 text-white/60 hover:text-white transition-all flex items-center gap-2 group font-medium cursor-pointer"
-        >
-          <span className="group-hover:-translate-x-1 transition-transform">
-            ←
-          </span>
-          Back to Explore
-        </button>
+        <OpportunityHeader navigate={navigate} selectedOpp={selectedOpp} />
 
-        <header className="mb-8 mt-4">
-          <h1 className="text-5xl font-black text-white mb-2 tracking-tighter">
-            {selectedOpp.task}
-          </h1>
-
-          <p className="text-xl text-blue-100/90 font-medium">
-            By {selectedOpp.teacher}
-          </p>
-        </header>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-y border-white/20 mb-8">
-          <div>
-            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
-              Location
-            </p>
-            <p className="text-white text-lg font-semibold">
-              {selectedOpp.location}
-            </p>
-          </div>
-          <div>
-            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
-              Time
-            </p>
-            <p className="text-white text-lg font-semibold">
-              {selectedOpp.time}
-            </p>
-          </div>
-          <div>
-            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
-              Credit
-            </p>
-            <p className="text-white text-lg font-semibold">
-              {selectedOpp.hours}h Offered
-            </p>
-          </div>
-          <div>
-            <p className="text-blue-200/60 text-xs uppercase font-bold tracking-widest">
-              Spots
-            </p>
-            <p
-              className={`text-lg font-bold ${spotsLeft < 5 ? "text-amber-300" : "text-emerald-300"}`}
-            >
-              {spotsLeft} Left
-            </p>
-          </div>
-        </div>
-
-        <section className="mb-10">
-          <h2 className="text-2xl font-bold text-white mb-4">Description</h2>
-          <p className="text-xl text-blue-50/80 leading-relaxed">
-            {selectedOpp.description}
-          </p>
-        </section>
         <div className="h-13 flex items-center">
           {loading ? (
             <div className="h-full w-40 bg-white/5 animate-pulse rounded-lg border border-white/10" />

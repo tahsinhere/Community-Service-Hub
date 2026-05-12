@@ -10,83 +10,91 @@ const OpportunityModal = ({
   selectedOpp: any;
 }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop: Softer dark overlay */}
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-6">
+      {/* Heavy Backdrop */}
       <div
         onClick={() => setConfirm(false)}
-        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0  backdrop-blur-sm transition-opacity"
       />
 
-      {/* Modal Container */}
-      <div className="relative z-10 w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-        <div className="p-8">
+      {/* Optimized Compact Modal */}
+      <div className="relative z-10 w-full max-w-100 bg-[#125C9B] rounded-4xl shadow-2xl border border-white/10 overflow-hidden">
+        <div className="p-7 md:p-9">
           <div className="space-y-6">
-            {/* Header: Alert style */}
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-100 rounded-lg">
-                <HiOutlineExclamationTriangle className="text-2xl text-amber-600" />
-              </div>
-              <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                Commitment Confirmation
+            {/* Header */}
+            <div className="flex flex-col items-center text-center gap-3">
+              <HiOutlineExclamationTriangle className="text-3xl text-white" />
+              <h2 className="text-lg font-black uppercase tracking-widest text-white">
+                Final Commitment
               </h2>
+              <p className="text-[10px] font-bold text-blue-200/60 uppercase tracking-widest">
+                Academic Integrity Protocol
+              </p>
             </div>
 
-            {/* Professional Notice: Softer Amber Palette */}
-            <div className="bg-amber-50 border border-amber-200 p-5 rounded-xl">
-              <p className="text-sm text-amber-900 leading-relaxed">
-                This platform functions exclusively as a{" "}
-                <span className="font-bold">scheduling mediator</span>. By
-                confirming, you acknowledge a formal commitment to:
-              </p>
-              <ul className="mt-4 space-y-3 text-sm font-medium text-amber-800/90">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
-                  <span>
-                    Report physically to{" "}
-                    <span className="text-amber-950 font-semibold">
-                      {selectedOpp.teacher}’s
-                    </span>{" "}
-                    designated classroom.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
-                  <span>
-                    Execute the assigned task in-person at{" "}
-                    <span className="text-amber-950 font-semibold">
+            {/* Steps & Honesty Logic */}
+            <div className="bg-white p-6 rounded-2xl shadow-xl">
+              <div className="space-y-5">
+                <div className="flex gap-4">
+                  <div className="h-5 w-5 rounded bg-[#125C9B] text-white flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">
+                    1
+                  </div>
+                  <p className="text-[12px] text-slate-700 leading-tight font-bold">
+                    <span className="text-slate-950">Claim:</span> Confirming
+                    claims 1 of {selectedOpp.capacity} spots. This action is{" "}
+                    <span className="underline">permanent</span> and affects
+                    peer availability.
+                  </p>
+                </div>
+
+                <div className="flex gap-4 border-t border-slate-100 pt-4">
+                  <div className="h-5 w-5 rounded bg-[#125C9B] text-white flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">
+                    2
+                  </div>
+                  <p className="text-[12px] text-slate-700 leading-tight font-bold">
+                    <span className="text-slate-950">Code:</span> A unique
+                    verification code will be generated immediately.{" "}
+                    <span className="text-[#125C9B]">Remember this code</span>{" "}
+                    and provide it to {selectedOpp.teacher}.
+                  </p>
+                </div>
+
+                <div className="flex gap-4 border-t border-slate-100 pt-4">
+                  <div className="h-5 w-5 rounded bg-[#125C9B] text-white flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">
+                    3
+                  </div>
+                  <p className="text-[12px] text-slate-700 leading-tight font-bold">
+                    <span className="text-slate-950">Verify:</span> Present this
+                    code to{" "}
+                    <span className="italic">{selectedOpp.teacher}</span> at{" "}
+                    <span className="italic text-[#125C9B]">
                       {selectedOpp.location}
-                    </span>
-                    .
-                  </span>
-                </li>
-              </ul>
+                    </span>{" "}
+                    to verify your hours.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* Protocol Footnote: Clean Slate/Blue mix */}
-            <div className="space-y-2">
-              <p className="text-[11px] text-slate-400 uppercase tracking-widest font-bold">
-                Post-Confirmation Protocol
+            {/* Footer */}
+            <div className="flex flex-col gap-3 pt-2 text-center">
+              <p className="text-[10px] font-bold text-blue-100/70 italic px-4">
+                "I affirm that I will fulfill this commitment according to ERHS
+                honesty standards."
               </p>
-              <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-lg border border-slate-100">
-                Registration <span className="font-semibold">cannot</span> be
-                cancelled through this interface. Should unforeseen
-                circumstances arise, you must notify the instructor directly.
-              </p>
-            </div>
 
-            {/* Action Footer */}
-            <div className="flex items-center justify-end gap-3 pt-2">
-              <button
-                onClick={() => setConfirm(false)}
-                className="cursor-pointer px-4 py-2.5 text-sm font-semibold text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-all"
-              >
-                Go Back
-              </button>
               <button
                 onClick={handleVolunteer}
-                className="cursor-pointer px-8 py-3 bg-[#125C9B] text-white text-sm font-bold rounded-xl hover:bg-blue-900 active:scale-95 transition-all "
+                className="w-full cursor-pointer py-4 bg-white text-[#125C9B] text-[11px] font-black rounded-xl hover:bg-blue-50 active:scale-[0.98] transition-all uppercase tracking-widest shadow-lg"
               >
-                Confirm Participation
+                Accept & Get Code
+              </button>
+
+              <button
+                onClick={() => setConfirm(false)}
+                className="w-full cursor-pointer py-2 text-[10px] font-bold text-blue-200/50 hover:text-white transition-all uppercase tracking-widest"
+              >
+                Cancel
               </button>
             </div>
           </div>

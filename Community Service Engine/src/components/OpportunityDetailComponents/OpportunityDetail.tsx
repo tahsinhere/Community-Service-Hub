@@ -26,13 +26,7 @@ interface SingleObject {
   };
   dataLoading: boolean;
 }
-//     <button
-//    onClick={() => {
-//      localStorage.removeItem(`token-${selectedOpp.id}`);
-//      window.location.reload();  }}
-//     className="text-xs text-red-400 underline mt-4"  >
-//    Debug: Reset Registration
-//      </button> ;
+
 const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -133,7 +127,16 @@ const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
           selectedOpp={selectedOpp}
         />
       )}
-
+      <button
+        onClick={() => {
+          localStorage.removeItem(`token-${selectedOpp.id}`);
+          window.location.reload();
+        }}
+        className="text-xs text-red-400 underline mt-4"
+      >
+        Debug: Reset Registration
+      </button>{" "}
+      ;
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

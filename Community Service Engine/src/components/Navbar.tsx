@@ -12,22 +12,33 @@ const Navbar = ({ teacher, onLogout, user }) => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900/80 backdrop-blur-md border-b border-white/5">
-      <div className="max-w-full mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="max-w-full mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
         {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3 group">
-          <LuShieldCheck className="text-2xl text-[#125C9B]" />
+          <LuShieldCheck className="text-2xl text-[#125C9B] shrink-0" />
           <div className="flex flex-col border-l border-white/10 pl-3">
-            <h1 className="text-xl font-black text-white tracking-tighter leading-none">
-              In House Community <span className="text-[#125C9B]">Service</span>
+            <h1 className="text-lg md:text-xl font-black text-white tracking-tighter leading-none">
+              {/* Desktop Text */}
+              <span className="hidden md:inline">
+                In House Community{" "}
+                <span className="text-[#125C9B]">Service</span>
+              </span>
+              {/* Mobile Text (Shortened) */}
+              <span className="inline md:hidden">
+                In House <span className="text-[#125C9B]">Service</span>
+              </span>
             </h1>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">
-              Eleanor Roosevelt HS
+            <p className="text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">
+              {/* Desktop Subtext */}
+              <span className="hidden md:inline">Eleanor Roosevelt HS</span>
+              {/* Mobile Subtext */}
+              <span className="inline md:hidden">ERHS</span>
             </p>
           </div>
         </Link>
 
         {/* Navigation Actions */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 md:gap-6">
           {/* 1. Verified Teacher View */}
           {teacher && (
             <Link
@@ -35,23 +46,24 @@ const Navbar = ({ teacher, onLogout, user }) => {
               className="flex items-center gap-2 text-[#125C9B] hover:text-blue-400 font-bold transition-colors uppercase tracking-widest text-[11px] border border-[#125C9B]/20 px-3 py-1.5 rounded-lg bg-[#125C9B]/5"
             >
               <LuLayoutDashboard className="text-lg" />
-              My Posts
+              <span className="hidden md:inline">My Posts</span>
             </Link>
           )}
 
+          {/* User Guide - Icon only on small mobile to prevent overlap */}
           <button className="flex items-center gap-2 text-gray-400 hover:text-white font-bold transition-colors cursor-pointer text-[12px] tracking-[0.2em]">
             <LuBookOpen className="text-[15px]" />
-            User Guide
+            <span className="hidden lg:inline">User Guide</span>
           </button>
 
           {/* 3. Auth Button */}
           {user ? (
             <button
               onClick={onLogout}
-              className="cursor-pointer px-4 py-1.5 bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl hover:bg-red-600/20 hover:text-white transition-all text-xs uppercase tracking-widest flex items-center gap-2"
+              className="cursor-pointer px-3 md:px-4 py-1.5 bg-red-500/10 text-red-500 border border-red-500/20 font-bold rounded-xl hover:bg-red-600/20 hover:text-white transition-all text-xs uppercase tracking-widest flex items-center gap-2"
             >
               <LuLogOut className="text-lg" />
-              Logout
+              <span className="hidden md:inline">Logout</span>
             </button>
           ) : (
             <button
@@ -59,7 +71,7 @@ const Navbar = ({ teacher, onLogout, user }) => {
               className="cursor-pointer px-4 py-1.5 bg-white text-black font-bold rounded-xl hover:bg-gray-300 transition-all shadow-lg shadow-white/5 flex items-center gap-2"
             >
               <LuUserPlus className="text-lg" />
-              Teacher
+              <span className="hidden md:inline">Teacher</span>
             </button>
           )}
         </div>

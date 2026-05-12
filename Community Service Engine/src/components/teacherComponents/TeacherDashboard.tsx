@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../backend/supabase";
 import CreateOppor from "./CreateOppor";
-import { LuUsers, LuMail } from "react-icons/lu";
+import { LuUsers, LuMail, LuInfo, LuTicket, LuPlus } from "react-icons/lu";
 
 const TeacherDashboard = ({ user }) => {
   const [myOpps, setMyOpps] = useState([]);
@@ -18,7 +18,7 @@ const TeacherDashboard = ({ user }) => {
       try {
         const { data, error } = await supabase
           .from("opportunities")
-          .select(`*`, tokens(id, token_code, is_claimed))
+          .select(`*, tokens(id, token_code, is_claimed)`)
           .eq("teacher_id", user.id);
 
         if (error) throw error;
@@ -35,110 +35,107 @@ const TeacherDashboard = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="max-w-6xl mx-auto p-40 selection:bg-white/20">
+    <div className="max-w-6xl mx-auto px-4 pt-24 pb-16 md:px-10 md:pt-36 selection:bg-white/20">
       {/* --- HEADER --- */}
-      <div className="flex flex-col md:flex-row justify-between items-end gap-4 mb-12 border-b border-white/10 pb-10">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-8 md:mb-12 border-b border-white/10 pb-8">
         <div>
-          <h1 className="text-4xl font-black text-white tracking-tighter uppercase ">
+          <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase">
             Dashboard
           </h1>
-          <p className="text-blue-200/50 text-sm font-medium mt-2">
-            Managing {myOpps.length} active opportunities
+          <p className="text-blue-200/50 text-xs md:text-sm font-medium mt-1">
+            {myOpps.length} Active • Anonymous Token System
           </p>
         </div>
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="cursor-pointer bg-white text-[#125C9B] px-8 py-3 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-white/80 transition-all shadow-xl active:scale-95"
+          className=" cursor-pointer flex items-center justify-center gap-2 bg-white text-[#125C9B] w-full md:w-auto px-8 py-4 md:py-3 rounded-2xl md:rounded-full font-black text-[12px] uppercase tracking-widest hover:bg-gray-200 transition-all shadow-xl active:scale-95"
         >
-          + Create New
+          <LuPlus size={16} /> New Task
         </button>
       </div>
 
       {/* --- CARDS GRID --- */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="h-64 bg-white/5 animate-pulse rounded-4xl" />
-          <div className="h-64 bg-white/5 animate-pulse rounded-4xl" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
+          <div className="h-64 bg-white/5 animate-pulse rounded-3xl" />
+          <div className="h-64 bg-white/5 animate-pulse rounded-3xl" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {myOpps.map((opp) => (
-            <div
-              key={opp.id}
-              className="bg-[#125C9B] border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col transition-transform hover:translate-y-[-4px]"
-            >
-              {/* Card Header */}
-              <div className="p-8 border-b border-white/5">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl font-black text-white leading-none tracking-tight">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
+          {myOpps.map((opp) => {
+            const claimedTokens = opp.tokens?.filter((t) => t.is_claimed) || [];
+
+            return (
+              <div
+                key={opp.id}
+                className="bg-[#125C9B] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl flex flex-col"
+              >
+                {/* Card Header */}
+                <div className="p-6 md:p-8 border-b border-white/5">
+                  <h3 className="text-xl md:text-2xl font-black text-white mb-3 leading-tight">
                     {opp.task}
                   </h3>
-                  <span className="bg-white/10 text-white border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">
-                    {opp.signups?.length || 0} / {opp.max_spots}
-                  </span>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="text-[10px] text-white/50 font-bold uppercase tracking-widest bg-black/20 px-2 py-1 rounded">
+                      {opp.location}
+                    </span>
+                    <span className="bg-emerald-500 text-black px-3 py-1 rounded-full text-[10px] font-black uppercase">
+                      {claimedTokens.length} / {opp.max_spots} Claimed
+                    </span>
+                  </div>
                 </div>
-                <p className="text-[10px] text-white/40 font-bold uppercase tracking-[0.2em]">
-                  {opp.time} • {opp.location}
-                </p>
-              </div>
 
-              {/* Roster Section */}
-              <div className="p-8 flex-1 bg-white/5">
-                <h4 className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                  <LuUsers size={14} /> Registered Students
-                </h4>
+                {/* Claimed Tokens List */}
+                <div className="p-6 md:p-8 bg-white/5 flex-1">
+                  <h4 className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                    <LuUsers size={14} /> Claimed Token Codes
+                  </h4>
 
-                <div className="space-y-3">
-                  {opp.signups && opp.signups.length > 0 ? (
-                    opp.signups.map((s) => (
-                      <div
-                        key={s.id}
-                        className="flex items-center justify-between group"
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white/10 border border-white/10 text-white rounded-full flex items-center justify-center font-bold text-xs">
-                            {s.profiles?.full_name?.charAt(0)}
-                          </div>
-                          <div>
-                            <p className="text-sm font-bold text-white leading-none">
-                              {s.profiles?.full_name}
-                            </p>
-                            <p className="text-[10px] text-white/30 mt-1 uppercase tracking-widest font-medium">
-                              {s.profiles?.email}
-                            </p>
-                          </div>
-                        </div>
-                        <a
-                          href={`mailto:${s.profiles?.email}`}
-                          className="text-white/20 hover:text-white transition-colors p-2"
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {claimedTokens.length > 0 ? (
+                      claimedTokens.map((token) => (
+                        <div
+                          key={token.id}
+                          className="flex items-center gap-3 bg-white/10 p-3 rounded-xl border border-white/10"
                         >
-                          <LuMail size={16} />
-                        </a>
+                          <LuTicket className="text-white/40" size={14} />
+                          <span className="text-sm font-mono font-bold text-white uppercase">
+                            {token.token_code}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="col-span-full text-center py-10 border border-dashed border-white/10 rounded-2xl">
+                        <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">
+                          No tokens claimed yet
+                        </p>
                       </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-6 border border-dashed border-white/10 rounded-2xl">
-                      <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest">
-                        Empty Roster
-                      </p>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                </div>
+
+                {/* Footer Info */}
+                <div className="px-6 py-4 bg-black/20 flex items-center gap-2">
+                  <LuInfo size={14} className="text-blue-300" />
+                  <p className="text-[10px] text-blue-100/70 uppercase font-bold tracking-tight">
+                    Verify codes upon student arrival
+                  </p>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
-      {/* --- CREATE MODAL --- */}
+      {/* --- MODAL --- */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center p-8">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-8">
           <div
             onClick={() => setShowCreateModal(false)}
-            className="absolute inset-0 backdrop-blur-sm"
+            className="absolute inset-0 backdrop-blur-md bg-black/40"
           />
-          <div className="relative w-full max-w-lg max-h overflow-y-hidden ">
+          <div className="relative w-full max-w-lg">
             <CreateOppor user={user} />
           </div>
         </div>

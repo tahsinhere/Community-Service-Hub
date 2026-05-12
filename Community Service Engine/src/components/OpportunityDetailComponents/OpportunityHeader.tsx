@@ -4,7 +4,7 @@ const OpportunityHeader = ({ navigate, selectedOpp }) => {
       {" "}
       <button
         onClick={() => navigate("/")}
-        className="absolute top-6 left-8 text-white/60 hover:text-white transition-all flex items-center gap-2 group font-medium cursor-pointer"
+        className="absolute top-4 left-8 text-white/60 hover:text-white transition-all flex items-center gap-2 group font-medium cursor-pointer"
       >
         <span className="group-hover:-translate-x-1 transition-transform">
           ←

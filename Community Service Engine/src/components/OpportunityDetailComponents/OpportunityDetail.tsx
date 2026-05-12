@@ -41,20 +41,12 @@ const OpportunityDetail = ({ oppor, user, dataLoading }: SingleObject) => {
         return;
       }
 
-      // 2.  Does a signup exist for this student + this opp?
-      const { data } = await supabase
-        .from("signups")
-        .select("id")
-        .eq("opportunity_id", selectedOpp.id)
-        .eq("student_id", user.id)
-        .maybeSingle();
+      const localStorageToken = localStorage.getItem(`token_${selectedOpp.id}`);
 
-      // found a match!
-      if (data) {
-        setSubmit(true);
-        setConfirm(false);
+      if (localStorageToken) {
+        setToken(localStorageToken);
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     checkLocalStorage();

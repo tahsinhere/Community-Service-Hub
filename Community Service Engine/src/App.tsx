@@ -1,6 +1,6 @@
 import OpportunityCard from "./components/OpportunityCard";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import OpportunityDetail from "./components/OpportunityDetail";
+import OpportunityDetail from "./components/OpportunityDetailComponents/OpportunityDetail";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from "react";

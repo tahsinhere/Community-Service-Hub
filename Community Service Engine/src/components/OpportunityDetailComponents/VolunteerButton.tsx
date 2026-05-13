@@ -19,7 +19,7 @@ const VolunteerButton = ({ isSubmit, spotsLeft, setConfirm, tokenCount }) => {
     <button
       onClick={() => canVolunteer && setConfirm(true)}
       disabled={!canVolunteer}
-      className={`group flex items-center justify-center min-w-[200px] px-8 py-4 text-sm font-black uppercase tracking-widest rounded-xl transition-all border-2 ${getButtonStyles()}`}
+      className={`group flex items-center justify-center min-w-50 px-8 py-4 text-sm font-black uppercase tracking-widest rounded-xl transition-all border-2 ${getButtonStyles()}`}
     >
       <div className="flex items-center gap-3">
         {isInitialLoading ? (

@@ -5,10 +5,8 @@ import { toast } from "sonner";
 import CannotFind from "../CannotFind";
 import LoadingCard from "../LoadingCard";
 import { useEffect, useState } from "react";
-
 import OpportunityModal from "./OpportunityModal";
 import OpportunityHeader from "./OpportunityHeader";
-import TokenDisplay from "./TokenDisplay";
 import TheDetails from "./TheDetails";
 import VolunteerButton from "./VolunteerButton";
 

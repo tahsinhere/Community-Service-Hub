@@ -78,14 +78,14 @@ const OpportunityModal = ({
 
             {/* Footer */}
             <div className="flex flex-col gap-3 pt-2 text-center">
-              <p className="text-[10px] font-bold text-blue-100/70 italic px-4">
+              <p className="text-[10px] font-bold text-blue-100/70  px-4">
                 "I affirm that I will fulfill this commitment according to ERHS
                 honesty standards."
               </p>
 
               <button
                 onClick={handleVolunteer}
-                className="w-full cursor-pointer py-4 bg-white text-[#125C9B] text-[11px] font-black rounded-xl hover:bg-blue-50 active:scale-[0.98] transition-all uppercase tracking-widest shadow-lg"
+                className="w-full cursor-pointer py-4 bg-white text-[#125C9B] text-[11px] font-black rounded-xl hover:bg-gray-200 transition-all uppercase tracking-widest "
               >
                 Accept & Get Code
               </button>

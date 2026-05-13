@@ -26,7 +26,13 @@ interface SingleObject {
   };
   dataLoading: boolean;
 }
-
+//     <button
+//    onClick={() => {
+//      localStorage.removeItem(`token-${selectedOpp.id}`);
+//      window.location.reload();  }}
+//     className="text-xs text-red-400 underline mt-4"  >
+//    Debug: Reset Registration
+//      </button> ;
 const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -127,16 +133,7 @@ const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
           selectedOpp={selectedOpp}
         />
       )}
-      <button
-        onClick={() => {
-          localStorage.removeItem(`token-${selectedOpp.id}`);
-          window.location.reload();
-        }}
-        className="text-xs text-red-400 underline mt-4"
-      >
-        Debug: Reset Registration
-      </button>{" "}
-      ;
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -145,9 +142,13 @@ const OpportunityDetail = ({ oppor, dataLoading }: SingleObject) => {
         className="relative max-w-4xl w-full bg-[#125C9B] border border-white/20 p-8 md:p-16 rounded-3xl shadow-2xl"
       >
         <OpportunityHeader navigate={navigate} selectedOpp={selectedOpp} />
-        <TheDetails spotsLeft={spotsLeft} selectedOpp={selectedOpp} />
-        {isSubmit && tokenCode && <TokenDisplay tokenCode={tokenCode} />}
-
+        <TheDetails
+          spotsLeft={spotsLeft}
+          selectedOpp={selectedOpp}
+          isSubmit={isSubmit}
+          tokenCode={tokenCode}
+        />
+        <div className="h-4" /> {/* This creates a physical 48px gap */}
         <div className="h-13 flex items-center">
           {loading ? (
             <div className="h-full w-40 bg-white/5 animate-pulse rounded-lg border border-white/10" />

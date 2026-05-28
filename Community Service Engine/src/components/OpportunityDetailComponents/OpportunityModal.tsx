@@ -14,11 +14,11 @@ const OpportunityModal = ({
       {/* Heavy Backdrop */}
       <div
         onClick={() => setConfirm(false)}
-        className="absolute inset-0  backdrop-blur-sm transition-opacity"
+        className="absolute inset-90  backdrop-blur-sm transition-opacity"
       />
 
       {/* Optimized Compact Modal */}
-      <div className="relative z-10 w-full max-w-100 bg-[#125C9B] rounded-4xl shadow-2xl border border-white/10 overflow-hidden">
+      <div className="relative z-10 w-full max-w-100 bg-blue-950 rounded-4xl shadow-2xl border border-white/10 overflow-hidden">
         <div className="p-7 md:p-9">
           <div className="space-y-6">
             {/* Header */}

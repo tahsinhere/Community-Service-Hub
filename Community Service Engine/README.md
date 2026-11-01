@@ -1,73 +1,47 @@
-# React + TypeScript + Vite
+# Community Service Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web application I built to make community service opportunities easier for students to discover and join.
 
-Currently, two official plugins are available:
+## The Problem
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+At my high school, community service opportunities were distributed through teacher emails and posters. Students could easily miss opportunities, and there was no centralized way to see how many spots remained.
 
-## React Compiler
+I built Community Service Hub to address this problem.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Opportunity Feed:** Students can browse available community service opportunities.
+- **Availability Tracking:** Displays remaining spots for each opportunity.
+- **Student Registration:** Students can join opportunities through the application.
+- **Teacher Dashboard:** Teachers can create opportunities and view student registrations.
+- **Authentication:** Google authentication through Supabase, with separate student and teacher access.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React and TypeScript
+- Vite
+- Tailwind CSS
+- Supabase (PostgreSQL and authentication)
+- Framer Motion
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Development and Challenges
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+After building the initial application, I presented it to my principal and AP Computer Science teacher.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+A major obstacle was the NYC Department of Education's privacy and application approval requirements, particularly because the original implementation handled student information.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+I explored an alternative token-based system that would reduce the need to collect student information. However, this introduced new challenges involving verification and accountability.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+The project is currently on hold pending a suitable approach to these requirements. It has not been approved or deployed as an official school system.
+
+## Repository Structure
+
+- `main` — Original implementation with authentication, opportunity registration, and teacher functionality.
+- `token-pivot` — Experimental alternative using claimable tokens.
+- `MyUnderstanding.md` — My development journal documenting technical decisions, problems, solutions, and what I learned throughout the project.
+
+## Status
+
+**Prototype / On Hold**
+
+This repository documents an independently developed student project and is not an official school application.
